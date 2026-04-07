@@ -92,7 +92,7 @@ public class HelperMySQL {
     }
 
     private int insertCliente (Cliente cliente, Connection conn) throws Exception{
-        String insert = "INSERT INTO Persona (idCliente, nombre, email) VALUES (?, ?, ?)";
+        String insert = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(insert);
