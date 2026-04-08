@@ -114,8 +114,9 @@ public class HelperMySQL {
             if (ps.executeUpdate() == 0) {
                 throw new Exception("No se pudo insertar el Cliente");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+       }catch (SQLException e) {
+                throw new RuntimeException("Error insertando cliente", e);
+
         } finally {
             closePsAndCommit(conn, ps);
         }
@@ -207,16 +208,30 @@ public class HelperMySQL {
             CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
 
             for (CSVRecord row : parser) {
-                System.out.println(row.get("idProducto"));
-                System.out.println(row.get("nombre"));
-                System.out.println(row.get("valor"));
+                String idProd = row.get("idProducto");
+                String nombre = row.get("nombre");
+                String valor = row.get("valor");
+
+                if (!idProd.isEmpty() && !nombre.isEmpty() && !valor.isEmpty()) {
+                    try {
+                        int id = Integer.parseInt(idProd);
+                        float valorFloat = Float.parseFloat(valor);
+
+
+                        Producto prod = new Producto(id, nombre, valorFloat);
+                        insertProducto(prod, conn);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error de formato en datos de persona: " + e.getMessage());
+                    }
+                }
+
             }
 
             System.out.println("Productos leídos correctamente");
 
         } catch (Exception e) {
             System.out.println("Error leyendo productos");
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -270,15 +285,29 @@ public class HelperMySQL {
             CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
 
             for (CSVRecord row : parser) {
-                System.out.println(row.get("idFactura"));
-                System.out.println(row.get("idCliente"));
+                String idFact = row.get("idFactura");
+                String idCli = row.get("idCliente");
+
+                if (!idFact.isEmpty() && !idCli.isEmpty()) {
+                    try {
+                        int idF = Integer.parseInt(idFact);
+                        int idC = Integer.parseInt(idCli);
+
+
+                        Factura fact = new Factura(idF, idC);
+                        insertFactura(fact, conn);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error de formato en datos de persona: " + e.getMessage());
+                    }
+                }
+
+
             }
 
             System.out.println("facturas leídas correctamente");
-
         } catch (Exception e) {
-            System.out.println("Error leyendo facturas");
-            e.printStackTrace();
+            throw new RuntimeException(e);
+
         }
 
     }
@@ -296,16 +325,31 @@ public class HelperMySQL {
             CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
 
             for (CSVRecord row : parser) {
-                System.out.println(row.get("idFactura"));
-                System.out.println(row.get("idProducto"));
-                System.out.println(row.get("cantidad"));
+                String idFact = row.get("idFactura");
+                String idProd = row.get("idProducto");
+                String cantidad = row.get("cantidad");
+
+                if (!idFact.isEmpty() && !idProd.isEmpty() && !cantidad.isEmpty()) {
+                    try {
+                        int idF = Integer.parseInt(idFact);
+                        int idP = Integer.parseInt(idProd);
+                        int cantidadP = Integer.parseInt(cantidad);
+
+
+                        Factura_Producto factprod =  new Factura_Producto(idF, idP, cantidadP);
+                        insertFacturaProducto(factprod, conn);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error de formato en datos de persona: " + e.getMessage());
+                    }
+                }
+
             }
 
             System.out.println("facturas-productos leídos correctamente");
 
         } catch (Exception e) {
             System.out.println("Error leyendo fact-prod");
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }

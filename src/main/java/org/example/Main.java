@@ -16,11 +16,11 @@ public class Main {
         HelperMySQL dbMySQL = new HelperMySQL();
         dbMySQL.dropTables();
         dbMySQL.createTables();
-        dbMySQL.closeConnection();
         dbMySQL.leerClientes();
         dbMySQL.leerProductos();
         dbMySQL.leerFacturas();
         dbMySQL.leerFacturasProductos();
+        dbMySQL.closeConnection();
 
         AbstractFactory chosenFactory = AbstractFactory.getDAOFactory(1);
         System.out.println();
