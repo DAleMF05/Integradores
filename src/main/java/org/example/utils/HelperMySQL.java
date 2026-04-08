@@ -39,7 +39,7 @@ public class HelperMySQL {
     }
 
     public void closeConnection() {
-        if (conn != null){
+        if (conn != null) {
             try {
                 conn.close();
             } catch (Exception e) {
@@ -47,6 +47,7 @@ public class HelperMySQL {
             }
         }
     }
+
     public void dropTables() throws SQLException {
 
         String dropFactura_Producto = "DROP TABLE IF EXISTS Factura_Producto";
@@ -72,7 +73,7 @@ public class HelperMySQL {
                 "idCliente INT NOT NULL, " +
                 "nombre VARCHAR(500), " +
                 "email VARCHAR(150), " +
-                "CONSTRAINT Cliente_pk PRIMARY KEY (idCliente));" ;
+                "CONSTRAINT Cliente_pk PRIMARY KEY (idCliente));";
         this.conn.prepareStatement(tableCliente).execute();
         this.conn.commit();
 
@@ -96,20 +97,20 @@ public class HelperMySQL {
                 "idFactura INT NOT NULL, " +
                 "idProducto INT NOT NULL, " +
                 "cantidad INT NOT NULL, " +
-                "CONSTRAINT Factura_Producto_pk PRIMARY KEY (idFactura, idProducto), "+
+                "CONSTRAINT Factura_Producto_pk PRIMARY KEY (idFactura, idProducto), " +
                 "CONSTRAINT FK_idFactura FOREIGN KEY (idFactura) REFERENCES Factura (idFactura))";
         this.conn.prepareStatement(tableFactura_Producto).execute();
         this.conn.commit();
     }
 
-    private int insertCliente (Cliente cliente, Connection conn) throws Exception{
+    private int insertCliente(Cliente cliente, Connection conn) throws Exception {
         String insert = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(insert);
-            ps.setInt(1,cliente.getIdCliente());
+            ps.setInt(1, cliente.getIdCliente());
             ps.setString(2, cliente.getNombre());
-            ps.setString(3,cliente.getEmail());
+            ps.setString(3, cliente.getEmail());
             if (ps.executeUpdate() == 0) {
                 throw new Exception("No se pudo insertar el Cliente");
             }
@@ -127,9 +128,9 @@ public class HelperMySQL {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(insert);
-            ps.setInt(1,producto.getIdProducto());
+            ps.setInt(1, producto.getIdProducto());
             ps.setString(2, producto.getNombre());
-            ps.setFloat(3,producto.getValor());
+            ps.setFloat(3, producto.getValor());
             if (ps.executeUpdate() == 0) {
                 throw new Exception("No se pudo insertar");
             }
@@ -147,7 +148,7 @@ public class HelperMySQL {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(insert);
-            ps.setInt(1,factura.getIdFactura());
+            ps.setInt(1, factura.getIdFactura());
             ps.setInt(2, factura.getIdCliente());
             if (ps.executeUpdate() == 0) {
                 throw new Exception("No se pudo insertar");
@@ -167,7 +168,7 @@ public class HelperMySQL {
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(insert);
-            ps.setInt(1,fp.getIdFactura());
+            ps.setInt(1, fp.getIdFactura());
             ps.setInt(2, fp.getIdProducto());
             ps.setInt(3, fp.getCantidad());
             if (ps.executeUpdate() == 0) {
@@ -182,11 +183,8 @@ public class HelperMySQL {
     }
 
 
-
-
-
     private void closePsAndCommit(Connection conn, PreparedStatement ps) {
-        if (conn != null){
+        if (conn != null) {
             try {
                 ps.close();
                 conn.commit();
@@ -222,7 +220,7 @@ public class HelperMySQL {
         }
     }
 
-    public void leerClientes(){
+    public void leerClientes() {
 
         try {
             InputStream input = getClass().getClassLoader().getResourceAsStream("clientes.csv");
@@ -235,18 +233,30 @@ public class HelperMySQL {
             CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
 
             for (CSVRecord row : parser) {
-                System.out.println(row.get("idCliente"));
-                System.out.println(row.get("nombre"));
-                System.out.println(row.get("email"));
-            }
+                String idString = row.get("idCliente");
+                String nombreString = row.get("nombre");
+                String emailString = row.get("email");
 
-            System.out.println("Clientes leídos correctamente");
+                if (!idString.isEmpty() && !nombreString.isEmpty() && !emailString.isEmpty()) {
+                    try {
+                        int id = Integer.parseInt(idString);
 
+
+                        Cliente cliente = new Cliente(id, nombreString, emailString);
+                        insertCliente(cliente, conn);
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error de formato en datos de persona: " + e.getMessage());
+                    }
+                }
+}
+                System.out.println("Clientes leídos correctamente");
         } catch (Exception e) {
-            System.out.println("Error leyendo clientes");
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
+
+
+
 
     public void leerFacturas(){
         try {

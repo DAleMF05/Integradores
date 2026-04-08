@@ -24,7 +24,8 @@ public class Main {
 
         AbstractFactory chosenFactory = AbstractFactory.getDAOFactory(1);
         System.out.println();
-        System.out.println("////////////////////////////////////////////");
+        System.out.println("/////////////////////////////////////////   ///");
+
         System.out.println("////////////////////////////////////////////");
         System.out.println();
         ClienteDAO cliente = chosenFactory.getClienteDAO();
@@ -33,9 +34,10 @@ public class Main {
         Factura_ProductoDAO facturaProducto = chosenFactory.getFactura_ProductoDAO();
 
 
-//        System.out.println("Busco un cliente por id: ");
-//        Cliente clienteById = cliente.getCliente(2);
-//        System.out.println(clienteById);
+     System.out.println("Busco un cliente por id: ");
+        Cliente clienteById = cliente.getCliente(2);
+        System.out.println(clienteById);
+
 
         List<Cliente> clientes = cliente.selectList();
 
