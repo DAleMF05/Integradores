@@ -1,4 +1,4 @@
-package org.example.entities;
+package org.example.dto;
 import lombok.*;
 
 @Getter
@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Factura_producto {
+public class Factura_ProductoDTO {
     private int cantidad;
     private int IdFactura;
     private int IdProducto;

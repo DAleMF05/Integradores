@@ -7,11 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import lombok.*;
 
+@AllArgsConstructor
 public class ProductoDAO {
     private Connection conn;
-
-    public ProductoDAO(Connection conn){this.conn = conn;}
 
     public void insertProducto(Producto prod) {
         String query = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";

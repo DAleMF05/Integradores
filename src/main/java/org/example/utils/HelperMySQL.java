@@ -1,18 +1,26 @@
 package org.example.utils;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import org.example.entities.*;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import org.example.entities.*;
+
 
 public class HelperMySQL {
     private Connection conn = null;
 
     public HelperMySQL() {//Constructor
         String driver = "com.mysql.cj.jdbc.Driver";
-        String uri = "jdbc:mysql://localhost:3306/demodao";
+        String uri = "jdbc:mysql://localhost:3306/integrador1";
 
         try {
             Class.forName(driver).getDeclaredConstructor().newInstance();
@@ -23,7 +31,7 @@ public class HelperMySQL {
         }
 
         try {
-            conn = DriverManager.getConnection(uri, "root", "");
+            conn = DriverManager.getConnection(uri, "user", "1234");
             conn.setAutoCommit(false);
         } catch (Exception e) {
             e.printStackTrace();
@@ -40,8 +48,9 @@ public class HelperMySQL {
         }
     }
     public void dropTables() throws SQLException {
-        String dropCliente = "DROP TABLE IF EXISTS Cliente";
-        this.conn.prepareStatement(dropCliente).execute();
+
+        String dropFactura_Producto = "DROP TABLE IF EXISTS Factura_Producto";
+        this.conn.prepareStatement(dropFactura_Producto).execute();
         this.conn.commit();
 
         String dropProducto = "DROP TABLE IF EXISTS Producto";
@@ -52,9 +61,10 @@ public class HelperMySQL {
         this.conn.prepareStatement(dropFactura).execute();
         this.conn.commit();
 
-        String dropFactura_producto = "DROP TABLE IF EXISTS Factura_producto";
-        this.conn.prepareStatement(dropFactura_producto).execute();
+        String dropCliente = "DROP TABLE IF EXISTS Cliente";
+        this.conn.prepareStatement(dropCliente).execute();
         this.conn.commit();
+
     }
 
     public void createTables() throws SQLException {
@@ -81,14 +91,15 @@ public class HelperMySQL {
                 "CONSTRAINT FK_idCliente FOREIGN KEY (idCliente) REFERENCES Cliente (idCliente))";
         this.conn.prepareStatement(tableFactura).execute();
         this.conn.commit();
-//        String tableFactura_Producto = "CREATE TABLE IF NOT EXISTS Factura_Producto(" +
-//                "idFactura INT NOT NULL, " +
-//                "idProducto INT NOT NULL, " +
-//                "cantidad INT NOT NULL, " +
-//                "CONSTRAINT Persona_pk PRIMARY KEY (idPersona), "+
-//                "CONSTRAINT FK_idDireccion FOREIGN KEY (idDireccion) REFERENCES Direccion (idDireccion))";
-//        this.conn.prepareStatement(tableFactura_Producto).execute();
-//        this.conn.commit();
+
+        String tableFactura_Producto = "CREATE TABLE IF NOT EXISTS Factura_Producto(" +
+                "idFactura INT NOT NULL, " +
+                "idProducto INT NOT NULL, " +
+                "cantidad INT NOT NULL, " +
+                "CONSTRAINT Factura_Producto_pk PRIMARY KEY (idFactura, idProducto), "+
+                "CONSTRAINT FK_idFactura FOREIGN KEY (idFactura) REFERENCES Factura (idFactura))";
+        this.conn.prepareStatement(tableFactura_Producto).execute();
+        this.conn.commit();
     }
 
     private int insertCliente (Cliente cliente, Connection conn) throws Exception{
@@ -150,25 +161,25 @@ public class HelperMySQL {
     }
 
 
-//    private int insertFacturaProducto(Factura_producto fp, Connection conn) throws Exception {
-//
-//        String insert = "INSERT INTO Factura (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
-//        PreparedStatement ps = null;
-//        try {
-//            ps = conn.prepareStatement(insert);
-//            ps.setInt(1,fp.getIdFactura());
-//            ps.setInt(2, fp.getIdProducto());
-//            ps.setInt(3, fp.getCantidad());
-//            if (ps.executeUpdate() == 0) {
-//                throw new Exception("No se pudo insertar");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } finally {
-//            closePsAndCommit(conn, ps);
-//        }
-//        return 0;
-//    }
+    private int insertFacturaProducto(Factura_Producto fp, Connection conn) throws Exception {
+
+        String insert = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
+        PreparedStatement ps = null;
+        try {
+            ps = conn.prepareStatement(insert);
+            ps.setInt(1,fp.getIdFactura());
+            ps.setInt(2, fp.getIdProducto());
+            ps.setInt(3, fp.getCantidad());
+            if (ps.executeUpdate() == 0) {
+                throw new Exception("No se pudo insertar");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closePsAndCommit(conn, ps);
+        }
+        return 0;
+    }
 
 
 
@@ -183,5 +194,109 @@ public class HelperMySQL {
                 e.printStackTrace();
             }
         }
+    }
+
+
+    public void leerProductos() {
+        try {
+            InputStream input = getClass().getClassLoader().getResourceAsStream("productos.csv");
+
+            if (input == null) {
+                throw new RuntimeException("No se encontró el archivo");
+            }
+
+            Reader reader = new InputStreamReader(input);
+            CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
+
+            for (CSVRecord row : parser) {
+                System.out.println(row.get("idProducto"));
+                System.out.println(row.get("nombre"));
+                System.out.println(row.get("valor"));
+            }
+
+            System.out.println("Productos leídos correctamente");
+
+        } catch (Exception e) {
+            System.out.println("Error leyendo productos");
+            e.printStackTrace();
+        }
+    }
+
+    public void leerClientes(){
+
+        try {
+            InputStream input = getClass().getClassLoader().getResourceAsStream("clientes.csv");
+
+            if (input == null) {
+                throw new RuntimeException("No se encontró el archivo");
+            }
+
+            Reader reader = new InputStreamReader(input);
+            CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
+
+            for (CSVRecord row : parser) {
+                System.out.println(row.get("idCliente"));
+                System.out.println(row.get("nombre"));
+                System.out.println(row.get("email"));
+            }
+
+            System.out.println("Clientes leídos correctamente");
+
+        } catch (Exception e) {
+            System.out.println("Error leyendo clientes");
+            e.printStackTrace();
+        }
+    }
+
+    public void leerFacturas(){
+        try {
+            InputStream input = getClass().getClassLoader().getResourceAsStream("facturas.csv");
+
+            if (input == null) {
+                throw new RuntimeException("No se encontró el archivo");
+            }
+
+            Reader reader = new InputStreamReader(input);
+            CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
+
+            for (CSVRecord row : parser) {
+                System.out.println(row.get("idFactura"));
+                System.out.println(row.get("idCliente"));
+            }
+
+            System.out.println("facturas leídas correctamente");
+
+        } catch (Exception e) {
+            System.out.println("Error leyendo facturas");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void leerFacturasProductos() {
+
+        try {
+            InputStream input = getClass().getClassLoader().getResourceAsStream("facturas-productos.csv");
+
+            if (input == null) {
+                throw new RuntimeException("No se encontró el archivo");
+            }
+
+            Reader reader = new InputStreamReader(input);
+            CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(reader);
+
+            for (CSVRecord row : parser) {
+                System.out.println(row.get("idFactura"));
+                System.out.println(row.get("idProducto"));
+                System.out.println(row.get("cantidad"));
+            }
+
+            System.out.println("facturas-productos leídos correctamente");
+
+        } catch (Exception e) {
+            System.out.println("Error leyendo fact-prod");
+            e.printStackTrace();
+        }
+
     }
 }

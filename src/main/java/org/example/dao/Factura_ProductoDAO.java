@@ -1,28 +1,25 @@
 package org.example.dao;
-
-import org.example.entities.Factura;
-import org.example.entities.Producto;
+import org.example.entities.Factura_Producto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import lombok.*;
 
 @AllArgsConstructor
-public class FacturaDAO {
+public class Factura_ProductoDAO {
+
     private Connection conn;
 
-
-
-    public void insertFactura(Factura fact) {
-        String query = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
+    public void insertFacturaProducto(Factura_Producto fp) {
+        String query = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(query);
-            ps.setInt(1,fact.getIdFactura());
-            ps.setInt(2, fact.getIdCliente());
+            ps.setInt(1, fp.getIdFactura());
+            ps.setInt(2, fp.getIdProducto());
+            ps.setInt(3, fp.getCantidad());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -38,27 +35,29 @@ public class FacturaDAO {
         }
     }
 
-    public Factura getFactura(Integer pk) {
-        String query = "SELECT  f.idCliente " +
-                "FROM Factura f " +
-                "WHERE f.idFactura = ?";
-        Factura facturaById = null;
+    public Factura_Producto getFacturaProducto(Integer pk1, Integer pk2) {
+        String query = "SELECT  fp.idFactura, fp.idProducto " +
+                "FROM Factura_Producto fp " +
+                "WHERE fp.idFactura = ? AND fp.idProducto = ?";
+        Factura_Producto facturaProductoById = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             ps = conn.prepareStatement(query);
-            ps.setInt(1, pk);
+            ps.setInt(1, pk1);
+            ps.setInt(2, pk2);
             rs = ps.executeQuery();
             if (rs.next()) {
-                int idCliente = rs.getInt("idCliente");
+                int idFactura = rs.getInt("idFactura");
+                int idProducto = rs.getInt("idProducto");
+                int cantidad = rs.getInt("cantidad");
 
-
-               facturaById = new Factura(pk, idCliente);
+                facturaProductoById = new Factura_Producto(pk1, pk2, cantidad);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 if (ps != null) {
                     ps.close();
@@ -67,18 +66,8 @@ public class FacturaDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
+            return facturaProductoById;
         }
-
-        return facturaById;
-    }
-
-    public boolean delete(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
-
-    public List<Producto> selectList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectList'");
     }
 }
