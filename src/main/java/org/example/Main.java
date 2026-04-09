@@ -1,6 +1,5 @@
 package org.example;
 
-
 import org.example.entities.*;
 import org.example.dao.*;
 import org.example.factory.AbstractFactory;
