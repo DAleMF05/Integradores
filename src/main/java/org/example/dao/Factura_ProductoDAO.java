@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.*;
 
 @AllArgsConstructor
@@ -69,5 +72,43 @@ public class Factura_ProductoDAO {
 
             return facturaProductoById;
         }
+    }
+
+    public List<Factura_Producto> selectList() {
+        String query = "SELECT * " +
+                "FROM Factura_Producto ";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<Factura_Producto> listado = null;
+        try {
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            // Crear una nueva instancia de Factura_Producto con los datos recuperados de la consulta
+            listado = new ArrayList<Factura_Producto>();
+            while (rs.next()) { // Verificar si hay resultados
+                int idFactura = rs.getInt("idFactura");
+                int idProducto = rs.getInt("idProducto");
+                int cantidad = rs.getInt("cantidad");
+
+                Factura_Producto facturaProducto= new Factura_Producto(idFactura, idProducto, cantidad);
+                listado.add(facturaProducto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listado;
     }
 }

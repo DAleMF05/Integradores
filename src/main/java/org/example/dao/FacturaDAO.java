@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 
@@ -77,8 +78,40 @@ public class FacturaDAO {
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
 
-    public List<Producto> selectList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectList'");
+    public List<Factura> selectList() {
+        String query = "SELECT * " +
+                "FROM Factura ";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List <Factura> listado = null;
+        try {
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            // Crear una nueva instancia de Factura con los datos recuperados de la consulta
+            listado = new ArrayList<Factura>();
+            while (rs.next()) { // Verificar si hay resultados
+                int idFactura = rs.getInt("idFactura");
+                int idCliente = rs.getInt("idCliente");
+
+                Factura factura= new Factura(idFactura, idCliente);
+                listado.add(factura);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listado;
     }
 }

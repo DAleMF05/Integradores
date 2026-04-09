@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 
@@ -77,7 +78,39 @@ public class ProductoDAO {
     }
 
     public List<Producto> selectList() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectList'");
+        String query = "SELECT * " +
+                "FROM Producto ";
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List <Producto> listado = null;
+        try {
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            // Crear una nueva instancia de Producto con los datos recuperados de la consulta
+            listado = new ArrayList<Producto>();
+            while (rs.next()) { // Verificar si hay resultados
+                int idProducto = rs.getInt("idProducto");
+                String nombre= rs.getString("nombre");
+                Float valor = rs.getFloat("valor");
+                Producto producto = new Producto(idProducto, nombre, valor);
+                listado.add(producto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listado;
     }
 }
