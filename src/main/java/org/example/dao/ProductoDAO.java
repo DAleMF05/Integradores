@@ -113,4 +113,44 @@ public class ProductoDAO {
 
         return listado;
     }
+
+    public Producto getProductoMasRecaudo(){
+        String query = "SELECT p.idProducto, p.nombre, p.valor, SUM(fp.cantidad * p.valor) AS total " +
+                "FROM Producto p " +
+                "JOIN Factura_Producto fp ON p.idProducto = fp.idProducto " +
+                "GROUP BY p.idProducto, p.nombre " +
+                "ORDER BY total DESC " +
+                "LIMIT 1 ";
+
+        Producto productoRec = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            if (rs.next()) { // Verificar si hay resultados
+                int idProducto = rs.getInt("p.idProducto");
+                String nombre = rs.getString("p.nombre");
+                Float valor = rs.getFloat("valor");
+
+                productoRec = new Producto(idProducto, nombre, valor);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return productoRec;
+
+
+    }
 }

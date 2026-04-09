@@ -48,6 +48,13 @@ public class Main {
         System.out.println("////////////////////////////////////////////");
         System.out.println("////////////////////////////////////////////");
 
+        System.out.println("Producto que mas recaudó : ");
+        Producto productoRec = producto.getProductoMasRecaudo();
+        System.out.println(productoRec);
+
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("////////////////////////////////////////////");
+
 //        System.out.println("Lista de direcciones: ");
 
 //        List<Direccion> listadoDirecciones = direccion.selectList();
@@ -57,7 +64,6 @@ public class Main {
 
         System.out.println("////////////////////////////////////////////");
         System.out.println("////////////////////////////////////////////");
-
 //        Persona p = new Persona(6,"Sergio",50,2);
 //        persona.insertPersona(p);
 
