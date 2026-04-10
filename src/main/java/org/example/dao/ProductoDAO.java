@@ -1,5 +1,6 @@
 package org.example.dao;
 
+import org.example.dto.ProductoDTO;
 import org.example.entities.Producto;
 
 import java.sql.Connection;
@@ -114,7 +115,7 @@ public class ProductoDAO {
         return listado;
     }
 
-    public Producto getProductoMasRecaudo(){
+    public ProductoDTO getProductoMasRecaudo(){
         String query = "SELECT p.idProducto, p.nombre, p.valor, SUM(fp.cantidad * p.valor) AS total " +
                 "FROM Producto p " +
                 "JOIN Factura_Producto fp ON p.idProducto = fp.idProducto " +
@@ -122,7 +123,7 @@ public class ProductoDAO {
                 "ORDER BY total DESC " +
                 "LIMIT 1 ";
 
-        Producto productoRec = null;
+        ProductoDTO productoRec = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
@@ -133,8 +134,9 @@ public class ProductoDAO {
                 int idProducto = rs.getInt("p.idProducto");
                 String nombre = rs.getString("p.nombre");
                 Float valor = rs.getFloat("valor");
+                Float recaudado = rs.getFloat("total");
 
-                productoRec = new Producto(idProducto, nombre, valor);
+                productoRec = new ProductoDTO(idProducto, nombre, valor, recaudado);
             }
         } catch (SQLException e) {
             e.printStackTrace();

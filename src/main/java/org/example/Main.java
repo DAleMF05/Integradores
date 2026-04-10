@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.dto.ClienteDTO;
+import org.example.dto.ProductoDTO;
 import org.example.entities.*;
 import org.example.dao.*;
 import org.example.factory.AbstractFactory;
@@ -39,18 +40,13 @@ public class Main {
         System.out.println(clienteById);
 
 
-        List<Cliente> clientes = cliente.selectList();
-
-        for (Cliente c : clientes){
-            c.toString();
-        }
 
 
         System.out.println("////////////////////////////////////////////");
         System.out.println("////////////////////////////////////////////");
 
         System.out.println("Producto que mas recaudó : ");
-        Producto productoRec = producto.getProductoMasRecaudo();
+        ProductoDTO productoRec = producto.getProductoMasRecaudo();
         System.out.println(productoRec.toString());
 
         System.out.println("////////////////////////////////////////////");
