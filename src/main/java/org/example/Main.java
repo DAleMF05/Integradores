@@ -14,12 +14,12 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws SQLException {
         HelperMySQL dbMySQL = new HelperMySQL();
-//        dbMySQL.dropTables();
-//        dbMySQL.createTables();
-//        dbMySQL.leerClientes();
-//        dbMySQL.leerProductos();
-//        dbMySQL.leerFacturas();
-//        dbMySQL.leerFacturasProductos();
+        dbMySQL.dropTables();
+        dbMySQL.createTables();
+       dbMySQL.leerClientes();
+       dbMySQL.leerProductos();
+        dbMySQL.leerFacturas();
+       dbMySQL.leerFacturasProductos();
         dbMySQL.closeConnection();
 
         AbstractFactory chosenFactory = AbstractFactory.getDAOFactory(1);

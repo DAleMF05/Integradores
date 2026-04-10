@@ -15,10 +15,20 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 
-public class HelperMySQL {
-    private Connection conn = null;
+/**
+ * \brief Clase Helper de MYSQL
+ * Esta clase administra la conexión a la base de datos con MYSQL
+ */
 
-    public HelperMySQL() {//Constructor
+public class HelperMySQL {
+    private Connection conn = null; /// Variable donde se guarda la conexión utilizando la interfaz Connection
+
+
+    /**
+     *  \brief Constructor del Helper
+     *  Carga el driver de MYSQL y crea la conexión a la bd
+     */
+    public HelperMySQL() {
         String driver = "com.mysql.cj.jdbc.Driver";
         String uri = "jdbc:mysql://localhost:3306/integrador1";
 
@@ -38,6 +48,10 @@ public class HelperMySQL {
         }
     }
 
+
+    /**
+     * \brief Cierra la conexión a la base de datos.
+     */
     public void closeConnection() {
         if (conn != null) {
             try {
@@ -48,6 +62,10 @@ public class HelperMySQL {
         }
     }
 
+    /**
+     * \brief Elimina las tablas existentes en la base de datos.
+     * @throws SQLException
+     */
     public void dropTables() throws SQLException {
 
         String dropFactura_Producto = "DROP TABLE IF EXISTS Factura_Producto";
@@ -68,6 +86,10 @@ public class HelperMySQL {
 
     }
 
+    /**
+     * \brief crea las tablas en la base de datos.
+     * @throws SQLException
+     */
     public void createTables() throws SQLException {
         String tableCliente = "CREATE TABLE IF NOT EXISTS Cliente(" +
                 "idCliente INT NOT NULL, " +
@@ -105,6 +127,13 @@ public class HelperMySQL {
         this.conn.commit();
     }
 
+    /**
+     * \brief Inserta un cliente en la base de datos.
+     * @param cliente [in] datos a insertar de la clase Cliente.
+     * @param conn [in] conexión a la base de datos.
+     * @return un 0.
+     * @throws Exception
+     */
     private int insertCliente(Cliente cliente, Connection conn) throws Exception {
         String insert = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
@@ -125,6 +154,14 @@ public class HelperMySQL {
         return 0;
     }
 
+
+    /**
+     * \brief Inserta un producto en la base de datos.
+     * @param producto [in] datos a insertar de la clase Producto.
+     * @param conn [in] conexión a la base de datos.
+     * @return un 0.
+     * @throws Exception
+     */
     private int insertProducto(Producto producto, Connection conn) throws Exception {
 
         String insert = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
@@ -145,6 +182,14 @@ public class HelperMySQL {
         return 0;
     }
 
+
+    /**
+     * \brief Inserta una factura en la base de datos.
+     * @param factura [in] datos a insertar de la clase Factura.
+     * @param conn [in] conexión a la base de datos.
+     * @return un 0.
+     * @throws Exception
+     */
     private int insertFactura(Factura factura, Connection conn) throws Exception {
 
         String insert = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
@@ -165,6 +210,13 @@ public class HelperMySQL {
     }
 
 
+    /**
+     * \brief Inserta una factura_producto en la base de datos.
+     * @param fp [in] datos a insertar de la clase Factura_producto.
+     * @param conn [in] conexión a la base de datos.
+     * @return un 0.
+     * @throws Exception
+     */
     private int insertFacturaProducto(Factura_Producto fp, Connection conn) throws Exception {
 
         String insert = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
@@ -186,6 +238,11 @@ public class HelperMySQL {
     }
 
 
+    /**
+     * \brief Cierra el preparedStatement y guarda cambios en la base de datos.
+     * @param conn [in] Conexión a la base de datos.
+     * @param ps [in] Interfaz que utiliza para ejecutar consultas.
+     */
     private void closePsAndCommit(Connection conn, PreparedStatement ps) {
         if (conn != null) {
             try {
@@ -198,6 +255,9 @@ public class HelperMySQL {
     }
 
 
+    /**
+     * \brief Lee archivo csv para cargar productos e insertarlos.
+     */
     public void leerProductos() {
         try {
             InputStream input = getClass().getClassLoader().getResourceAsStream("productos.csv");
@@ -237,6 +297,9 @@ public class HelperMySQL {
         }
     }
 
+    /**
+     * \brief Lee archivo csv para cargar clientes e insertarlos.
+     */
     public void leerClientes() {
 
         try {
@@ -273,8 +336,9 @@ public class HelperMySQL {
     }
 
 
-
-
+    /**
+     * \brief Lee archivo csv para cargar facturas e insertarlas.
+     */
     public void leerFacturas(){
         try {
             InputStream input = getClass().getClassLoader().getResourceAsStream("facturas.csv");
@@ -314,6 +378,9 @@ public class HelperMySQL {
 
     }
 
+    /**
+     * \brief Lee archivo csv para cargar facturas_productos e insertarlas.
+     */
     public void leerFacturasProductos() {
 
         try {
