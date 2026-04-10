@@ -155,5 +155,46 @@ public class ClienteDAO {
 
         return listado;
     }
+
+    public List<ClienteDTO> getClientesOrdFactura(){
+        String query = "SELECT c.idCliente, c.nombre, SUM(fp.cantidad * p.valor) AS total " +
+                "FROM Cliente c " +
+                "JOIN Factura f ON c.idCliente = f.idCliente " +
+                "JOIN Factura_Producto fp ON f.idFactura = fp.idFactura " +
+                "JOIN Producto p ON fp.idProducto = p.idProducto " +
+                "GROUP BY c.idCliente, c.nombre " +
+                "ORDER BY total DESC";
+
+        List<ClienteDTO> listaC = new ArrayList<ClienteDTO>();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) { // Verificar si hay resultados
+                int idCliente = rs.getInt("idCliente");
+                String nombre = rs.getString("nombre");
+                Float total = rs.getFloat("total");
+
+                ClienteDTO cliente= new ClienteDTO(idCliente, nombre, total);
+                listaC.add(cliente);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                conn.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return listaC;
+    }
+
 }
 

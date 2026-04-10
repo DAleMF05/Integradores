@@ -12,5 +12,8 @@ public class Cliente {
     private String nombre;
     private String email;
 
-
+    public Cliente(int idCliente, String nombre){
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+    }
 }

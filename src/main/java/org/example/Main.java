@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.dto.ClienteDTO;
 import org.example.entities.*;
 import org.example.dao.*;
 import org.example.factory.AbstractFactory;
@@ -13,12 +14,12 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws SQLException {
         HelperMySQL dbMySQL = new HelperMySQL();
-        dbMySQL.dropTables();
-        dbMySQL.createTables();
-        dbMySQL.leerClientes();
-        dbMySQL.leerProductos();
-        dbMySQL.leerFacturas();
-        dbMySQL.leerFacturasProductos();
+//        dbMySQL.dropTables();
+//        dbMySQL.createTables();
+//        dbMySQL.leerClientes();
+//        dbMySQL.leerProductos();
+//        dbMySQL.leerFacturas();
+//        dbMySQL.leerFacturasProductos();
         dbMySQL.closeConnection();
 
         AbstractFactory chosenFactory = AbstractFactory.getDAOFactory(1);
@@ -50,24 +51,29 @@ public class Main {
 
         System.out.println("Producto que mas recaudó : ");
         Producto productoRec = producto.getProductoMasRecaudo();
-        System.out.println(productoRec);
+        System.out.println(productoRec.toString());
 
         System.out.println("////////////////////////////////////////////");
         System.out.println("////////////////////////////////////////////");
 
-//        System.out.println("Lista de direcciones: ");
+        System.out.println("Lista de clientes que mas facturaron ordenada: ");
 
-//        List<Direccion> listadoDirecciones = direccion.selectList();
-//        for (Direccion dir : listadoDirecciones) {
-//            System.out.println(dir);
+//        List<Cliente> listaClientes = cliente.getClientesOrdFactura();
+//        for (Cliente c : listaClientes) {
+//            System.out.println(c);
 //        }
 
-        System.out.println("////////////////////////////////////////////");
-        System.out.println("////////////////////////////////////////////");
-//        Persona p = new Persona(6,"Sergio",50,2);
-//        persona.insertPersona(p);
 
-//        ClienteDTO personaDTO = cliente.getClienteDTO(2);
-//        System.out.println(personaDTO);
+        List<ClienteDTO> listaClientes = cliente.getClientesOrdFactura();
+        for (ClienteDTO c : listaClientes) {
+            System.out.println(c.toString());
+        }
+
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("////////////////////////////////////////////");
+
+
+//        ClienteDTO clienteDTO = cliente.getClienteDTO(2);
+//        System.out.println(clienteDTO);
     }
 }
