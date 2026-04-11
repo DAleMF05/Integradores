@@ -11,27 +11,36 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 
+/**
+ * \brief DAO de Cliente.
+ *
+ * Gestioona las operaciones de acceso a datos
+ * relacionadas con la entidad Cliente en la base de datos.
+ */
 @AllArgsConstructor
 public class ClienteDAO {
+
+    /** Conexión a la base de datos. */
     private Connection conn;
 
-
+    /**
+     * \brief Inserta un cliente en la base de datos.
+     * @param cliente [in] Cliente a insertar.
+     */
     public void insertCliente(Cliente cliente) {
         String query = "INSERT INTO Cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = conn.prepareStatement(query);
-            ps.setInt(1,cliente.getIdCliente());
+            ps.setInt(1, cliente.getIdCliente());
             ps.setString(2, cliente.getNombre());
-            ps.setString(3,cliente.getEmail());
+            ps.setString(3, cliente.getEmail());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
+                if (ps != null) ps.close();
                 conn.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -39,10 +48,13 @@ public class ClienteDAO {
         }
     }
 
+    /**
+     * \brief Obtiene un cliente por su ID.
+     * @param pk [in] Identificador único del cliente.
+     * @return Cliente encontrado o null si no existe.
+     */
     public Cliente getCliente(Integer pk) {
-        String query = "SELECT c.nombre, c.email " +
-                "FROM Cliente c " +
-                "WHERE c.idCliente = ?";
+        String query = "SELECT c.nombre, c.email FROM Cliente c WHERE c.idCliente = ?";
         Cliente clienteById = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -51,20 +63,18 @@ public class ClienteDAO {
             ps = conn.prepareStatement(query);
             ps.setInt(1, pk);
             rs = ps.executeQuery();
+
             if (rs.next()) {
                 String nombre = rs.getString("nombre");
                 String email = rs.getString("email");
-
-
                 clienteById = new Cliente(pk, nombre, email);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
+                if (ps != null) ps.close();
                 conn.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -74,79 +84,35 @@ public class ClienteDAO {
         return clienteById;
     }
 
-    public ClienteDTO getClienteDTO(Integer pk) {
-//        String query = "SELECT p.nombre, p.edad, d.ciudad, d.calle, d.numero " +
-//                "FROM Persona p " +
-//                "JOIN Direccion d ON p.idDireccion = d.idDireccion " +
-//                "WHERE p.idPersona = ?";
-       Cliente clienteById = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        ClienteDTO clienteDTO = null;
-        try {
-//            ps = conn.prepareStatement(query);
-            ps.setInt(1, pk); // Establecer el parámetro en la consulta SQL
-            rs = ps.executeQuery();
-            if (rs.next()) { // Verificar si hay resultados
-//                String nombre = rs.getString("nombre");
-//                int edad = rs.getInt("edad");
-//                String ciudad = rs.getString("ciudad");
-//                String calle = rs.getString("calle");
-//                int numero = rs.getInt("numero");
-
-                // Crear una nueva instancia de PersonaDTO con los datos recuperados de la consulta
-//                personaDTO = new PersonaDTO(nombre, edad, ciudad, calle, numero);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                conn.commit();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return clienteDTO;
-    }
-
-    public boolean delete(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
-
+    /**
+     * \brief Obtiene todos los clientes de la base de datos.
+     * @return Lista de clientes.
+     */
     public List<Cliente> selectList() {
-        String query = "SELECT * " +
-                "FROM Cliente ";
+        String query = "SELECT * FROM Cliente";
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<Cliente> listado = null;
+        List<Cliente> listado = new ArrayList<>();
+
         try {
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            // Crear una nueva instancia de Cliente con los datos recuperados de la consulta
-            listado = new ArrayList<Cliente>();
-            while (rs.next()) { // Verificar si hay resultados
+
+            while (rs.next()) {
                 int idCliente = rs.getInt("idCliente");
-                String nombre= rs.getString("nombre");
+                String nombre = rs.getString("nombre");
                 String email = rs.getString("email");
+
                 Cliente cliente = new Cliente(idCliente, nombre, email);
                 listado.add(cliente);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (ps != null) {
-                    ps.close();
-                }
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
                 conn.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -156,7 +122,14 @@ public class ClienteDAO {
         return listado;
     }
 
-    public List<ClienteDTO> getClientesOrdFactura(){
+    /**
+     * \brief Obtiene una lista de clientes ordenados por el total facturado.
+     *
+     * El total se calcula como la suma de (cantidad * valor) del producto.
+     *
+     * @return Lista de ClienteDTO ordenada de mayor a menor facturación.
+     */
+    public List<ClienteDTO> getClientesOrdFactura() {
         String query = "SELECT c.idCliente, c.nombre, SUM(fp.cantidad * p.valor) AS total " +
                 "FROM Cliente c " +
                 "JOIN Factura f ON c.idCliente = f.idCliente " +
@@ -165,28 +138,28 @@ public class ClienteDAO {
                 "GROUP BY c.idCliente, c.nombre " +
                 "ORDER BY total DESC";
 
-        List<ClienteDTO> listaC = new ArrayList<ClienteDTO>();
+        List<ClienteDTO> listaC = new ArrayList<>();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
             ps = conn.prepareStatement(query);
             rs = ps.executeQuery();
-            while (rs.next()) { // Verificar si hay resultados
+
+            while (rs.next()) {
                 int idCliente = rs.getInt("idCliente");
                 String nombre = rs.getString("nombre");
                 Float total = rs.getFloat("total");
 
-                ClienteDTO cliente= new ClienteDTO(idCliente, nombre, total);
+                ClienteDTO cliente = new ClienteDTO(idCliente, nombre, total);
                 listaC.add(cliente);
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
+                if (ps != null) ps.close();
                 conn.commit();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -195,6 +168,4 @@ public class ClienteDAO {
 
         return listaC;
     }
-
 }
-

@@ -10,11 +10,23 @@ import java.util.List;
 
 import lombok.*;
 
+/**
+ * \brief DAO de Factura_Producto
+ *
+ * Gestiona las operaciones de acceso a datos para la entidad Factura_Producto, que representa
+ * la relación entre facturas y productos junto con la cantidad vendida.
+ */
+
 @AllArgsConstructor
 public class Factura_ProductoDAO {
 
+    /** Conexión a la base de datos. */
     private Connection conn;
 
+    /**
+     * \brief Inserta una relación entre factura y producto en la base de datos.
+     * @param fp [in] Factura_Producto a insertar.
+     */
     public void insertFacturaProducto(Factura_Producto fp) {
         String query = "INSERT INTO Factura_Producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
@@ -38,8 +50,15 @@ public class Factura_ProductoDAO {
         }
     }
 
+    /**
+     *\brief Obtiene una relación Factura-Producto por sus claves.
+     * @param pk1 [in] Identificador único de la factura.
+     * @param pk2 [in] Identificador único del producto.
+     * @return Factura_Producto encontrada o null si no existe.
+     */
+
     public Factura_Producto getFacturaProducto(Integer pk1, Integer pk2) {
-        String query = "SELECT  fp.idFactura, fp.idProducto " +
+        String query = "SELECT  fp.idFactura, fp.idProducto, fp.cantidad " +
                 "FROM Factura_Producto fp " +
                 "WHERE fp.idFactura = ? AND fp.idProducto = ?";
         Factura_Producto facturaProductoById = null;
@@ -55,6 +74,7 @@ public class Factura_ProductoDAO {
                 int idFactura = rs.getInt("idFactura");
                 int idProducto = rs.getInt("idProducto");
                 int cantidad = rs.getInt("cantidad");
+                System.out.println(cantidad);
 
                 facturaProductoById = new Factura_Producto(pk1, pk2, cantidad);
             }
@@ -69,11 +89,15 @@ public class Factura_ProductoDAO {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-            return facturaProductoById;
         }
+        return facturaProductoById;
     }
 
+
+    /**
+     * \brief Obtiene todas las relaciones Factura_Producto de la base de datos.
+     * @return Listado de todas las relaciones Factura_Producto.
+     */
     public List<Factura_Producto> selectList() {
         String query = "SELECT * " +
                 "FROM Factura_Producto ";

@@ -11,11 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 
+/**
+ * \brief DAO de Factura
+ *
+ * Gestiona las operaciones de acceso a datos relacionadas
+ * a la entidad Factura en la base de datos.
+ */
+
 @AllArgsConstructor
 public class FacturaDAO {
+
+    /** Conexión a la base de datos */
     private Connection conn;
 
 
+    /**
+     * \brief Inserta una factura en la base de datos.
+     * @param fact [in] factura a insertar.
+     */
 
     public void insertFactura(Factura fact) {
         String query = "INSERT INTO Factura (idFactura, idCliente) VALUES (?, ?)";
@@ -39,6 +52,11 @@ public class FacturaDAO {
         }
     }
 
+    /**
+     * \brief Obtiene una factura por su ID.
+     * @param pk Identificador único de la factura.
+     * @return Factura encontrada o null si no existe.
+     */
     public Factura getFactura(Integer pk) {
         String query = "SELECT  f.idCliente " +
                 "FROM Factura f " +
@@ -73,11 +91,10 @@ public class FacturaDAO {
         return facturaById;
     }
 
-    public boolean delete(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
-
+    /**
+     * \brief Obtiene todas las facturas de la base de datos.
+     * @return Lista de facturas.
+     */
     public List<Factura> selectList() {
         String query = "SELECT * " +
                 "FROM Factura ";

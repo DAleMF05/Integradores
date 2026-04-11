@@ -12,9 +12,24 @@ import java.util.List;
 import lombok.*;
 
 @AllArgsConstructor
+
+/**
+ * \brief DAO de Producto
+ *
+ * Gestiona las operaciones de acceso a datos relacionadas
+ * a la entidad Producto en la base de datos.
+ */
+
 public class ProductoDAO {
+
+    /** Conexión a la base de datos. */
     private Connection conn;
 
+
+    /**
+     * \brief Inserta un producto en la base de datos.
+     * @param prod [in] producto a insertar.
+     */
     public void insertProducto(Producto prod) {
         String query = "INSERT INTO Producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
         PreparedStatement ps = null;
@@ -38,6 +53,12 @@ public class ProductoDAO {
         }
     }
 
+
+    /**
+     * \brief Obtiene un producto por su ID.
+     * @param pk Identificador único del producto.
+     * @return Producto encontrado o null si no existe.
+     */
     public Producto getProducto(Integer pk) {
         String query = "SELECT p.nombre, p.valor " +
                 "FROM Producto p " +
@@ -73,11 +94,11 @@ public class ProductoDAO {
         return productoById;
     }
 
-    public boolean delete(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
 
+    /**
+     * \brief Obtiene todos las productos de la base de datos.
+     * @return Lista de productos.
+     */
     public List<Producto> selectList() {
         String query = "SELECT * " +
                 "FROM Producto ";
@@ -115,6 +136,11 @@ public class ProductoDAO {
         return listado;
     }
 
+
+    /**
+     * \brief Obtiene el producto que más recaudó, teniendo en cuenta valor * cantidad.
+     * @return DTO de producto que más recaudó.
+     */
     public ProductoDTO getProductoMasRecaudo(){
         String query = "SELECT p.idProducto, p.nombre, p.valor, SUM(fp.cantidad * p.valor) AS total " +
                 "FROM Producto p " +

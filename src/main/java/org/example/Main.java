@@ -10,41 +10,62 @@ import org.example.utils.HelperMySQL;
 import java.sql.SQLException;
 import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+/**
+ * \brief Clase principal del sistema.
+ *
+ * Se encarga de inicializar la base de datos, crear las tablas,
+ * cargar los datos desde archivos CSV y ejecutar distintas consultas
+ * utilizando los DAOs.
+ */
 public class Main {
+    /**
+     * \brief Método principal de ejecución.
+     *
+     * Realiza las siguientes operaciones:
+     * - Inicializa la base de datos.
+     * - Crea y elimina tablas.
+     * - Carga datos desde archivos CSV.
+     * - Obtiene instancias de los DAOs mediante la fábrica.
+     * - Ejecuta consultas de prueba:
+     *   - Buscar cliente por ID.
+     *   - Obtener el producto con mayor recaudación.
+     *   - Listar clientes ordenados por total facturado.
+     *
+     * @param args Argumentos de línea de comandos (no utilizados).
+     * @throws SQLException En caso de error en la base de datos.
+     */
     public static void main(String[] args) throws SQLException {
+
+        // Inicialización de base de datos.
         HelperMySQL dbMySQL = new HelperMySQL();
         dbMySQL.dropTables();
         dbMySQL.createTables();
-       dbMySQL.leerClientes();
-       dbMySQL.leerProductos();
+        dbMySQL.leerClientes();
+        dbMySQL.leerProductos();
         dbMySQL.leerFacturas();
-       dbMySQL.leerFacturasProductos();
+        dbMySQL.leerFacturasProductos();
         dbMySQL.closeConnection();
 
+        // Obtención de fábrica de DAOs
         AbstractFactory chosenFactory = AbstractFactory.getDAOFactory(1);
-        System.out.println();
-        System.out.println("/////////////////////////////////////////   ///");
 
-        System.out.println("////////////////////////////////////////////");
-        System.out.println();
         ClienteDAO cliente = chosenFactory.getClienteDAO();
         ProductoDAO producto = chosenFactory.getProductoDAO();
         FacturaDAO factura = chosenFactory.getFacturaDAO();
         Factura_ProductoDAO facturaProducto = chosenFactory.getFactura_ProductoDAO();
 
+        System.out.println("////////////////////////////////////////////");
+        System.out.println("////////////////////////////////////////////");
 
-     System.out.println("Busco un cliente por id: ");
+        // Buscar cliente por ID
+        System.out.println("Busco un cliente por id: ");
         Cliente clienteById = cliente.getCliente(2);
         System.out.println(clienteById);
 
-
-
-
         System.out.println("////////////////////////////////////////////");
         System.out.println("////////////////////////////////////////////");
 
+        // Producto con mayor recaudación
         System.out.println("Producto que mas recaudó : ");
         ProductoDTO productoRec = producto.getProductoMasRecaudo();
         System.out.println(productoRec.toString());
@@ -52,14 +73,8 @@ public class Main {
         System.out.println("////////////////////////////////////////////");
         System.out.println("////////////////////////////////////////////");
 
+        // Clientes ordenados por total facturado
         System.out.println("Lista de clientes que mas facturaron ordenada: ");
-
-//        List<Cliente> listaClientes = cliente.getClientesOrdFactura();
-//        for (Cliente c : listaClientes) {
-//            System.out.println(c);
-//        }
-
-
         List<ClienteDTO> listaClientes = cliente.getClientesOrdFactura();
         for (ClienteDTO c : listaClientes) {
             System.out.println(c.toString());
@@ -68,8 +83,5 @@ public class Main {
         System.out.println("////////////////////////////////////////////");
         System.out.println("////////////////////////////////////////////");
 
-
-//        ClienteDTO clienteDTO = cliente.getClienteDTO(2);
-//        System.out.println(clienteDTO);
     }
 }
