@@ -16,7 +16,7 @@ public class Carrera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCarrera;
+    private Integer idCarrera;
     private String nombre;
 
     @OneToMany(mappedBy = "carrera")

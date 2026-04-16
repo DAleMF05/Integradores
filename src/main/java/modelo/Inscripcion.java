@@ -16,9 +16,7 @@ public class Inscripcion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idInscripcion;
-    private int idEstudiante;
-    private int idCarrera;
+    private Integer idInscripcion;
     private LocalDate fechaInsc;
     private LocalDate fechaGrad;
 

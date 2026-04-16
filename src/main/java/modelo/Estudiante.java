@@ -24,7 +24,6 @@ public class Estudiante {
     private String dni;
     private String ciudad;
     private String numLibretaUni;
-    private List<Carrera> carreras;
 
     @OneToMany(mappedBy = "estudiante")
     private List<Inscripcion> inscripciones = new ArrayList<>();
