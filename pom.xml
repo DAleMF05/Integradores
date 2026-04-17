@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>micro.example</groupId>
-    <artifactId>otro_ejemplo_jpa</artifactId>
+    <artifactId>Integrador2</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
