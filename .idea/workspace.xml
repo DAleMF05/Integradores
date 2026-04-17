@@ -5,15 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a256ecb8-2f4c-4d99-b1c4-2209ebaa388e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Integrador2.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/otro_ejemplo_jpa.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Carrera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Carrera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Estudiante.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/CarreraRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/CarreraRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/EstudianteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/EstudianteRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/InscripcionRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/InscripcionRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/carrera.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/carrera.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/estudiante.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/estudiante.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/carrera.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/carrera.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/estudiante.csv" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/estudiante.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/modelo/Carrera.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/modelo/Carrera.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/modelo/Estudiante.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/modelo/Estudiante.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/repository/CarreraRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/repository/CarreraRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/repository/EstudianteRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/repository/EstudianteRepository.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,18 +30,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 0
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 0
+}</component>
   <component name="ProjectId" id="3CVEm1Odza2bee2kdUs6siGeLz7" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
@@ -48,10 +58,21 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="Integrador2" />
+      <module name="integrador2" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="integrador2" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="integrador2" />
+      <option name="filePath" />
+      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>

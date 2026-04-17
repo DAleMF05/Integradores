@@ -21,14 +21,13 @@ public class EstudianteRepository {
 
             while ((linea = reader.readNext()) != null) {
                 Estudiante estudiante = new Estudiante();
-                estudiante.setIdEstudiante(Integer.parseInt(linea[1]));
-                estudiante.setNombre(linea[2]);
-                estudiante.setApellido(linea[3]);
-                estudiante.setEdad(Integer.parseInt(linea[4]));
-                estudiante.setGenero(linea[5].charAt(0));
-                estudiante.setDni(linea[6]);
-                estudiante.setCiudad(linea[7]);
-                estudiante.setNumLibretaUni(linea[8]);
+                estudiante.setNombre(linea[0]);
+                estudiante.setApellido(linea[1]);
+                estudiante.setEdad(Integer.parseInt(linea[2]));
+                estudiante.setGenero(linea[3].charAt(0));
+                estudiante.setDni(linea[4]);
+                estudiante.setCiudad(linea[5]);
+                estudiante.setNumLibretaUni(linea[6]);
 //                estudiante.setInscripciones();
 
                 em.persist(estudiante);

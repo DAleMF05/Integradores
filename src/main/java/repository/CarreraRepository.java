@@ -16,14 +16,15 @@ public class CarreraRepository {
 
         try (CSVReader reader = new CSVReader(new FileReader(rutaArchivo))) {
             String[] linea;
+
+            // revisar salto de linea
             reader.readNext(); // salta cabecera
 
             em.getTransaction().begin();
 
             while ((linea = reader.readNext()) != null) {
                 Carrera carrera = new Carrera();
-                carrera.setIdCarrera(Integer.parseInt(linea[1]));
-                carrera.setNombre(linea[2]);
+                carrera.setNombre(linea[0]);
 
                 em.persist(carrera);
             }

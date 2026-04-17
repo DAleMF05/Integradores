@@ -21,11 +21,10 @@ public class InscripcionRepository {
 //
 //            while ((linea = reader.readNext()) != null) {
 //                Inscripcion inscripcion = new Inscripcion();
-//                inscripcion.setIdInscripcion(Integer.parseInt(linea[1]));
-//                inscripcion.setEstudiante(Integer.parseInt(linea[2]));
-//                inscripcion.setCarrera(Integer.parseInt(linea[3]));
-//                inscripcion.setFechaInsc(LocalDate.parse(linea[4]));
-//                inscripcion.setFechaGrad(LocalDate.parse(linea[5]));
+//                inscripcion.setEstudiante(Integer.parseInt(linea[0]));
+//                inscripcion.setCarrera(Integer.parseInt(linea[1]));
+//                inscripcion.setFechaInsc(LocalDate.parse(linea[2]));
+//                inscripcion.setFechaGrad(LocalDate.parse(linea[3]));
 //
 //                em.persist(inscripcion);
 //            }

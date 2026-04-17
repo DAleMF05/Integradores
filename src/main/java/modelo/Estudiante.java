@@ -12,6 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Estudiante {
 
     @Id
@@ -27,6 +28,9 @@ public class Estudiante {
 
     @OneToMany(mappedBy = "estudiante")
     private List<Inscripcion> inscripciones = new ArrayList<>();
+
+    public Estudiante(String nombre, String apellido, int edad, char genero, String dni, String ciudad, String numLibretaUni) {
+    }
 
     // getters y setters
 }
