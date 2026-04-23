@@ -27,6 +27,7 @@ public class Estudiante {
     private String numLibretaUni;
 
     @OneToMany(mappedBy = "estudiante")
+    @ToString.Exclude
     private List<Inscripcion> inscripciones = new ArrayList<>();
 
     public Estudiante(String nombre, String apellido, int edad, char genero, String dni, String ciudad, String numLibretaUni) {

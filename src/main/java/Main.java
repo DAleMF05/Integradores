@@ -1,3 +1,4 @@
+import dto.EstudianteDTO;
 import modelo.Estudiante;
 import repository.CarreraRepository;
 import repository.EstudianteRepository;
@@ -15,6 +16,8 @@ public class Main {
 
         Estudiante e = new Estudiante("Ale","Lopez",40,'M',"23455667","Loberia","321");
         estudiante.insertarEstudiante(e);
+
+
         System.out.println(estudiante.buscarTodos());
     }
 }

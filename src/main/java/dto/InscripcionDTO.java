@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class InscripcionDTO {
 
     private int idEstudiante; //poner nombre!

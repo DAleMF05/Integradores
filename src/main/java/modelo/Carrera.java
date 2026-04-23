@@ -21,6 +21,7 @@ public class Carrera {
     private String nombre;
 
     @OneToMany(mappedBy = "carrera")
+    @ToString.Exclude
     private List<Inscripcion> inscripciones = new ArrayList<>();
 
     // getters y setters
