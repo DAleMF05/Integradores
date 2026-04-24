@@ -45,12 +45,18 @@ public class EstudianteRepository {
     public void insertarEstudiante(Estudiante estudiante) {
         EntityManager em = JPAUtil.getEntityManager();
 
-//        if(estudiante.getIdEstudiante() == null) {
-//            em.persist(estudiante);
-//        } else {
-//            em.merge(estudiante);
-//        }
-        em.persist(estudiante);
+        em.getTransaction().begin();
+
+        Estudiante existente = em.find(Estudiante.class, estudiante.getIdEstudiante());
+
+        if (existente == null) {
+            em.persist(estudiante);
+        } else {
+            System.out.println("Ya existe ese estudiante");
+        }
+
+        em.getTransaction().commit();
+        em.close();
     }
 
 

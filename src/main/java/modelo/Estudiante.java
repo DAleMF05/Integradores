@@ -28,7 +28,14 @@ public class Estudiante {
     @OneToMany(mappedBy = "estudiante")
     private List<Inscripcion> inscripciones = new ArrayList<>();
 
-    public Estudiante(String nombre, String apellido, int edad, char genero, String dni, String ciudad, String numLibretaUni) {
+    public Estudiante( String nombre, String apellido, int edad, char genero, String dni, String ciudad, String numLibretaUni) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.genero = genero;
+        this.dni = dni;
+        this.ciudad = ciudad;
+        this.numLibretaUni = numLibretaUni;
     }
 
     // getters y setters
