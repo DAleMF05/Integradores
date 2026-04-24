@@ -1,6 +1,7 @@
 package repository;
 
 import com.opencsv.CSVReader;
+import dto.CarreraDTO;
 import factory.JPAUtil;
 import jakarta.persistence.EntityManager;
 import modelo.Carrera;
@@ -38,9 +39,10 @@ public class CarreraRepository {
     }
 
 
-    public List<Carrera> buscarTodos() {
+    //dto
+    public List<CarreraDTO> buscarTodos() {
         EntityManager em = JPAUtil.getEntityManager();
-        List<Carrera> carreras = em.createQuery("SELECT c FROM Carrera c", Carrera.class).getResultList();
+        List<CarreraDTO> carreras = em.createQuery("SELECT new dto.CarreraDTO(c.nombre) FROM Carrera c", CarreraDTO.class).getResultList();
         em.close();
         return carreras;
     }

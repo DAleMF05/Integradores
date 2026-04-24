@@ -1,7 +1,10 @@
+import dto.CarreraDTO;
 import dto.EstudianteDTO;
 import modelo.Estudiante;
 import repository.CarreraRepository;
 import repository.EstudianteRepository;
+
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,13 +14,20 @@ public class Main {
         estudiante.insertarDesdeCSV("src/main/resources/estudiante.csv");
         carrera.insertarDesdeCSV("src/main/resources/carrera.csv");
 
-        System.out.println(estudiante.buscarTodos());
-        System.out.println(carrera.buscarTodos());
+        System.out.println("Lista de carrreras: ");
+        List<CarreraDTO> carreraDTOS= carrera.buscarTodos();
+        for (CarreraDTO carre: carreraDTOS) {
+            System.out.println(carre);
+        }
 
         Estudiante e = new Estudiante("Ale","Lopez",40,'M',"23455667","Loberia","321");
         estudiante.insertarEstudiante(e);
 
+        System.out.println("Lista de estudiantes: ");
+        List<EstudianteDTO> estudianteDTOS= estudiante.buscarTodos();
+        for (EstudianteDTO est : estudianteDTOS){
+            System.out.println(est);
+        }
 
-        System.out.println(estudiante.buscarTodos());
     }
 }

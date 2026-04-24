@@ -1,6 +1,9 @@
 package dto;
 
 import lombok.*;
+import modelo.Estudiante;
+
+import java.util.List;
 
 @Getter
 @Setter

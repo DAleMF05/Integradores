@@ -1,6 +1,7 @@
 package repository;
 
 import com.opencsv.CSVReader;
+import dto.EstudianteDTO;
 import factory.JPAUtil;
 import jakarta.persistence.EntityManager;
 import modelo.Estudiante;
@@ -52,9 +53,13 @@ public class EstudianteRepository {
         em.persist(estudiante);
     }
 
-    public List<Estudiante> buscarTodos() {
+
+    //DTO
+    public List<EstudianteDTO> buscarTodos() {
         EntityManager em = JPAUtil.getEntityManager();
-        List<Estudiante> estudiantes = em.createQuery("SELECT e FROM Estudiante e", Estudiante.class).getResultList();
+        List<EstudianteDTO> estudiantes = em.createQuery("SELECT new dto.EstudianteDTO(e.idEstudiante, e.nombre, e.apellido, " +
+                        "e.edad, e.genero, e.dni, e.ciudad, e.numLibretaUni) FROM Estudiante e",
+                            EstudianteDTO.class).getResultList();
         em.close();
         return estudiantes;
     }
