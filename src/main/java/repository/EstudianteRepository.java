@@ -4,6 +4,7 @@ import com.opencsv.CSVReader;
 import dto.EstudianteDTO;
 import factory.JPAUtil;
 import jakarta.persistence.EntityManager;
+import modelo.Carrera;
 import modelo.Estudiante;
 
 import java.io.FileReader;
@@ -96,4 +97,28 @@ public class EstudianteRepository {
         return estudiantePorLU;
 
     }
+
+    public List<EstudianteDTO> buscarTodosPorGenero(char gen) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<EstudianteDTO> estudiantesPorGen= em.createQuery(
+                "SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, " +
+                        "e.edad, e.genero, e.ciudad, e.numLibretaUni) " +
+                        "FROM Estudiante e " +
+                        "WHERE e.genero = :gen",
+                EstudianteDTO.class).setParameter("gen", gen).getResultList();
+        em.close();
+        return estudiantesPorGen;
+    }
+
+    public List<EstudianteDTO> buscarPorResidencia(String carrera, String ciudad) {
+        EntityManager em = JPAUtil.getEntityManager();
+        List<EstudianteDTO> personas = em.createQuery(
+                        "SELECT e FROM Estudiante e JOIN Carrera c WHERE e.ciudad = :ciudad AND c.nombre = :carrera", EstudianteDTO.class)
+                .setParameter("ciudad", ciudad)
+                .setParameter("carrera", carrera)
+                .getResultList();
+        em.close();
+        return personas;
+    }
+
 }

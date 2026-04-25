@@ -1,4 +1,5 @@
 import dto.CarreraDTO;
+import dto.CarreraInsDTO;
 import dto.EstudianteDTO;
 import dto.InscripcionDTO;
 import modelo.Carrera;
@@ -77,8 +78,23 @@ public class Main {
         System.out.println(estudiante.buscarEstudiantePorLU("51244"));
 
 
+        System.out.println("Lista de estudiantes por genero: ");
+        estudianteDTOS= estudiante.buscarTodosPorGenero('M');
+        for (EstudianteDTO est : estudianteDTOS){
+            System.out.println(est);
+        }
 
+        System.out.println("Lista de carreras ordenadas por inscriptos: ");
+        List<CarreraInsDTO> carrerasDTOS = carrera.buscarPorInscriptos();
+        for (CarreraInsDTO carIns : carrerasDTOS){
+            System.out.println(carIns);
+        }
 
+        System.out.println("Lista de estudiantes de una carrera filtrados por ciudad: ");
+        List<EstudianteDTO> estudiantesDTOS = estudiante.buscarPorResidencia("TUDAI", "Rauch");
+        for (EstudianteDTO est : estudiantesDTOS){
+            System.out.println(est);
+        }
 
     }
 }

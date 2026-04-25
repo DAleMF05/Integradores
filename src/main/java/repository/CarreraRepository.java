@@ -2,6 +2,8 @@ package repository;
 
 import com.opencsv.CSVReader;
 import dto.CarreraDTO;
+import dto.CarreraInsDTO;
+import dto.EstudianteDTO;
 import factory.JPAUtil;
 import jakarta.persistence.EntityManager;
 import modelo.Carrera;
@@ -63,6 +65,22 @@ public class CarreraRepository {
 
         em.getTransaction().commit();
         em.close();
+    }
+
+    public List<CarreraInsDTO> buscarPorInscriptos() {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        List<CarreraInsDTO> carreraInscriptos = em.createQuery(
+                "SELECT new dto.CarreraInsDTO(" +
+                        "c.idCarrera, c.nombre, c.duracion, COUNT(i.idInscripcion)) " +
+                        "FROM Carrera c JOIN c.inscripciones i " +
+                        "GROUP BY c.idCarrera, c.nombre, c.duracion " +
+                        "ORDER BY COUNT(i.idInscripcion) DESC",
+                CarreraInsDTO.class
+        ).getResultList();
+
+        em.close();
+        return carreraInscriptos;
     }
 
 }
