@@ -15,12 +15,19 @@ import java.util.List;
 public class Carrera {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCarrera;
     private String nombre;
     private int duracion;
 
     @OneToMany(mappedBy = "carrera")
-    private List<Inscripcion> inscripciones = new ArrayList<>();
+    private List<Inscripcion> inscripciones;
 
     // getters y setters
+
+    public Carrera(String nombre, int duracion) {
+        this.duracion = duracion;
+        this.nombre = nombre;
+        this.inscripciones = new ArrayList<>();
+    }
 }

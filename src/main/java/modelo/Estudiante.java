@@ -15,6 +15,9 @@ import java.util.List;
 public class Estudiante {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int idEstudiante;
+    @Column(unique = true, nullable = false)
     private String dni;
     private String nombre;
     private String apellido;
@@ -24,9 +27,18 @@ public class Estudiante {
     private String numLibretaUni;
 
     @OneToMany(mappedBy = "estudiante")
-    private List<Inscripcion> inscripciones = new ArrayList<>();
+    private List<Inscripcion> inscripciones;
 
-
+    public Estudiante(String dni, String nombre, String apellido, int edad, char genero, String ciudad, String numLibretaUni) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+        this.genero = genero;
+        this.ciudad = ciudad;
+        this.numLibretaUni = numLibretaUni;
+        this.inscripciones = new ArrayList<>();
+    }
 
     // getters y setters
 }

@@ -27,8 +27,12 @@ public class InscripcionRepository {
 
            while ((linea = reader.readNext()) != null) {
                 Inscripcion inscripcion = new Inscripcion();
-                inscripcion.setIdInscripcion(Integer.parseInt(linea[0]));
-               Estudiante estudiante= em.find(Estudiante.class, (linea[1]));
+
+               Estudiante estudiante = em.createQuery(
+                               "SELECT e FROM Estudiante e WHERE e.dni = :dni",
+                               Estudiante.class
+                       ).setParameter("dni", linea[1])
+                       .getSingleResult();
                inscripcion.setEstudiante(estudiante);
                Carrera carrera = em.find(Carrera.class, Integer.parseInt(linea[2]));
                inscripcion.setCarrera(carrera);
@@ -52,5 +56,34 @@ public class InscripcionRepository {
         List<InscripcionDTO> inscripcionDTOS = em.createQuery("SELECT new dto.InscripcionDTO(i.idInscripcion, e.dni, c.idCarrera, i.fechaInsc, i.fechaGrad, i.antiguedad ) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c ", InscripcionDTO.class).getResultList();
         em.close();
         return inscripcionDTOS;
+    }
+
+//    public void matricularEstudiante(Estudiante estudiante, Carrera carrera) {
+//        EntityManager em = JPAUtil.getEntityManager();
+//        Inscripcion nuevaInsc = new Inscripcion(estudiante.getDni(), carrera.getIdCarrera());
+//    }
+
+    public void matricularEstudiante(Inscripcion nueva) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        em.getTransaction().begin();
+
+        Estudiante est = em.find(Estudiante.class, nueva.getEstudiante().getIdEstudiante());
+        Carrera car = em.find(Carrera.class, nueva.getCarrera().getIdCarrera());
+
+        nueva.setEstudiante(est);
+        nueva.setCarrera(car);
+
+//        Inscripcion existente = em.find(Inscripcion.class, estudiante.getDni(), carrera.getIdCarrera());
+
+//        if (existente == null) {
+//            em.persist(estudiante);
+//        } else {
+//            System.out.println("Ya existe ese estudiante");
+//        }
+        em.persist(nueva);
+
+        em.getTransaction().commit();
+        em.close();
     }
 }

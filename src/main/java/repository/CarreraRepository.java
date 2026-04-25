@@ -25,7 +25,6 @@ public class CarreraRepository {
 
             while ((linea = reader.readNext()) != null) {
                 Carrera carrera = new Carrera();
-                carrera.setIdCarrera(Integer.parseInt(linea[0]));
                 carrera.setNombre(linea[1]);
                 carrera.setDuracion(Integer.parseInt(linea[2]));
 
@@ -48,4 +47,22 @@ public class CarreraRepository {
         em.close();
         return carreras;
     }
+
+    public void insertarCarrera(Carrera carrera) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        em.getTransaction().begin();
+
+        Carrera existente = em.find(Carrera.class, carrera.getIdCarrera());
+
+        if (existente == null) {
+            em.persist(carrera);
+        } else {
+            System.out.println("Ya existe esa carrera");
+        }
+
+        em.getTransaction().commit();
+        em.close();
+    }
+
 }

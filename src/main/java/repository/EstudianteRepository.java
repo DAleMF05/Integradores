@@ -29,7 +29,6 @@ public class EstudianteRepository {
                 estudiante.setGenero(linea[4].charAt(0));
                 estudiante.setCiudad(linea[5]);
                 estudiante.setNumLibretaUni(linea[6]);
-//                estudiante.setInscripciones();
 
                 em.persist(estudiante);
             }
