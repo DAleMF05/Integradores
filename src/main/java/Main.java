@@ -93,7 +93,8 @@ public class Main {
         System.out.println("Lista de estudiantes de una carrera filtrados por ciudad: ");
         List<EstudianteDTO> estudiantesDTOS = estudiante.buscarPorResidencia("TUDAI", "Rauch");
         for (EstudianteDTO est : estudiantesDTOS){
-            System.out.println(est);
+            System.out.println(est.getNombre() + " " + est.getApellido() + ", " + est.getCiudad());
+            // Podríamos hacer un DTO que también traiga la carrera del estudiante
         }
 
     }
