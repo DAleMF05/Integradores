@@ -16,8 +16,8 @@ public class Inscripcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idInscripcion;
-    private int fechaInsc;
-    private int fechaGrad;
+    private Integer fechaInsc;
+    private Integer fechaGrad;
     private int antiguedad;
 
     @ManyToOne
