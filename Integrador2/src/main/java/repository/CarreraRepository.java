@@ -51,6 +51,10 @@ public class CarreraRepository {
         return carreras;
     }
 
+    /**
+     * Persiste una nueva entidad Carrera en la base de datos.
+     * Previamente verifica la existencia de una carrera con el mismo identificador para evitar duplicados.
+     */
     public void insertarCarrera(Carrera carrera) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -68,6 +72,10 @@ public class CarreraRepository {
         em.close();
     }
 
+    /**
+     * Recupera un listado de carreras junto con la cantidad de inscripciones asociadas.
+     * Los resultados se agrupan por carrera y se ordenan en forma descendente según la cantidad de inscriptos.
+     */
     public List<CarreraInsDTO> buscarPorInscriptos() {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -85,7 +93,11 @@ public class CarreraRepository {
     }
 
 
-
+    /**
+     * Genera un reporte consolidado por carrera y año.
+     * Integra la cantidad de inscriptos y graduados, combinando resultados de múltiples consultas
+     * y ordenándolos por nombre de carrera y año.
+     */
     public List<CarreraReporteDTO> generarReporte() {
 
         EntityManager em = JPAUtil.getEntityManager();

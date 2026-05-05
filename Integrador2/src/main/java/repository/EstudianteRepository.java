@@ -42,6 +42,9 @@ public class EstudianteRepository {
         }
     }
 
+    /**
+     * Persiste una nueva entidad Estudiante en la base de datos.
+     */
     public void insertarEstudiante(Estudiante estudiante) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -61,6 +64,10 @@ public class EstudianteRepository {
 
 
     //DTO
+
+    /**
+     * Recupera la totalidad de estudiantes, proyectando sus datos en objetos DTO.
+     */
     public List<EstudianteDTO> buscarTodos() {
         EntityManager em = JPAUtil.getEntityManager();
         List<EstudianteDTO> estudiantes = em.createQuery("SELECT new dto.EstudianteDTO(e.dni, e.nombre, e.apellido, " +
@@ -70,6 +77,9 @@ public class EstudianteRepository {
         return estudiantes;
     }
 
+    /**
+     * Recupera todos los estudiantes ordenados de manera ascendente según su DNI.
+     */
     public List<EstudianteDTO> buscarTodosPorDNI() {
         EntityManager em = JPAUtil.getEntityManager();
         List<EstudianteDTO> estudiantesPorDNI = em.createQuery(
@@ -82,6 +92,10 @@ public class EstudianteRepository {
         return estudiantesPorDNI;
     }
 
+    /**
+     * Obtiene un estudiante a partir de su número de libreta universitaria.
+     * Retorna un único resultado proyectado en DTO.
+     */
     public EstudianteDTO buscarEstudiantePorLU(String lu) {
 
         EntityManager em = JPAUtil.getEntityManager();
@@ -98,6 +112,9 @@ public class EstudianteRepository {
 
     }
 
+    /**
+     * Recupera estudiantes filtrados según su género.
+     */
     public List<EstudianteDTO> buscarTodosPorGenero(char gen) {
         EntityManager em = JPAUtil.getEntityManager();
         List<EstudianteDTO> estudiantesPorGen= em.createQuery(
@@ -111,6 +128,10 @@ public class EstudianteRepository {
         return estudiantesPorGen;
     }
 
+    /**
+     * Recupera estudiantes inscriptos en una carrera específica
+     * y cuya residencia coincide con la ciudad indicada.
+     */
     public List<EstudianteDTO> buscarPorResidencia(String carrera, String ciudad) {
         EntityManager em = JPAUtil.getEntityManager();
         List<EstudianteDTO> estudiantes = em.createQuery(
