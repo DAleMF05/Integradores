@@ -1,4 +1,4 @@
-package modelo;
+package com.example.integrador3.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +16,7 @@ public class Estudiante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEstudiante;
+    private Long idEstudiante;
     @Column(unique = true, nullable = false)
     private String dni;
     private String nombre;

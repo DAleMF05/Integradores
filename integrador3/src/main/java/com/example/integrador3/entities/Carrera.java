@@ -1,5 +1,6 @@
+package com.example.integrador3.entities;
 
-
+import com.example.integrador3.dto.CarreraDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +17,7 @@ public class Carrera {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idCarrera;
+    private Long idCarrera;
     private String nombre;
     private int duracion;
 
@@ -29,5 +30,9 @@ public class Carrera {
         this.duracion = duracion;
         this.nombre = nombre;
         this.inscripciones = new ArrayList<>();
+    }
+
+    public Carrera(CarreraDTO carre) {
+
     }
 }
