@@ -51,6 +51,10 @@ public class InscripcionRepository {
         }
     }
 
+    /**
+     * Recupera todas las inscripciones existentes, incluyendo datos asociados
+     * de estudiantes y carreras, proyectados en objetos DTO.
+     */
     public List<InscripcionDTO> buscarTodos() {
         EntityManager em = JPAUtil.getEntityManager();
         List<InscripcionDTO> inscripcionDTOS = em.createQuery("SELECT new dto.InscripcionDTO(i.idInscripcion, e.dni, c.idCarrera, i.fechaInsc, i.fechaGrad, i.antiguedad ) FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c ", InscripcionDTO.class).getResultList();
@@ -58,6 +62,10 @@ public class InscripcionRepository {
         return inscripcionDTOS;
     }
 
+    /**
+     * Persiste una nueva inscripción vinculando un estudiante y una carrera previamente existentes.
+     * La operación se ejecuta dentro de un contexto transaccional.
+     */
     public void matricularEstudiante(Inscripcion nueva) {
         EntityManager em = JPAUtil.getEntityManager();
 
@@ -69,13 +77,6 @@ public class InscripcionRepository {
         nueva.setEstudiante(est);
         nueva.setCarrera(car);
 
-//        Inscripcion existente = em.find(Inscripcion.class, estudiante.getDni(), carrera.getIdCarrera());
-
-//        if (existente == null) {
-//            em.persist(estudiante);
-//        } else {
-//            System.out.println("Ya existe ese estudiante");
-//        }
         em.persist(nueva);
 
         em.getTransaction().commit();
