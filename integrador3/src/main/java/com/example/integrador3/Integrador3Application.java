@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Integrador3Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Integrador3Application.class, args);
+        System.out.println("hola");
+        SpringApplication.run(Integrador3Application.class, args);
 	}
-
 }
