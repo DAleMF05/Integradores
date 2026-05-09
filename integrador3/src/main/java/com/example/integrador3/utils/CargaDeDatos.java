@@ -1,11 +1,11 @@
 package com.example.integrador3.utils;
 
-/*
-import com.example.springbootexample.domain.*;
-import com.example.springbootexample.repository.ClienteRepository;
-import com.example.springbootexample.repository.FacturaProductoRepository;
-import com.example.springbootexample.repository.FacturaRepository;
-import com.example.springbootexample.repository.ProductoRepository;
+
+import com.example.integrador3.repository.ICarreraRepository;
+import com.example.integrador3.repository.IEstudianteRepository;
+import com.example.integrador3.repository.IInscripcionRepository;
+import com.example.integrador3.entities.*;
+import com.opencsv.CSVReader;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -20,110 +20,100 @@ import java.io.IOException;
 @Component
 public class CargaDeDatos {
 
-    private final ClienteRepository clienteRepository;
-    private final FacturaRepository facturaRepository;
-    private final ProductoRepository productoRepository;
-    private final FacturaProductoRepository facturaProductoRepository;
+    private final ICarreraRepository carreraRepository;
+    private final IEstudianteRepository estudianteRepository;
+    private final IInscripcionRepository inscripcionRepository;
+
 
     @Autowired
-    public CargaDeDatos(ClienteRepository clienteRepository,FacturaRepository facturaRepository,ProductoRepository productoRepository, FacturaProductoRepository facturaProductoRepository) {
-
-        this.clienteRepository = clienteRepository;
-        this.facturaRepository = facturaRepository;
-        this.productoRepository = productoRepository;
-        this.facturaProductoRepository = facturaProductoRepository;
+    public CargaDeDatos(ICarreraRepository carreraRepository, IEstudianteRepository estudianteRepository, IInscripcionRepository inscripcionRepository) {
+        this.carreraRepository = carreraRepository;
+        this.estudianteRepository = estudianteRepository;
+        this.inscripcionRepository = inscripcionRepository;
     }
+
 
     public void cargarDatosDesdeCSV() throws IOException {
-        File clientesCSV = ResourceUtils.getFile("src/main/java/com/example/springbootexample/csv/clientes-con-dni.csv");
-        File productosCSV = ResourceUtils.getFile("src/main/java/com/example/springbootexample/csv/productos-con-rubro.csv");
-        File facturasCSV = ResourceUtils.getFile("src/main/java/com/example/springbootexample/csv/facturas.csv");
-        File facturasProductosCSV = ResourceUtils.getFile("src/main/java/com/example/springbootexample/csv/facturas-productos.csv");
+        File carreraCSV = ResourceUtils.getFile("src/main/resources/carreras.csv");
+        File estudianteCSV = ResourceUtils.getFile("src/main/resources/estudiantes.csv");
+        File inscripcionCSV = ResourceUtils.getFile("src/main/resources/estudianteCarrera.csv");
 
-        try (FileReader reader = new FileReader(clientesCSV);
-             CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
+        try (CSVReader reader = new CSVReader(new FileReader(carreraCSV))) {
+            String[] linea;
+            reader.readNext(); // salta cabecera
 
-            for (CSVRecord csvRecord : csvParser) {
-                Cliente cliente = new Cliente();
-                cliente.setNombre(csvRecord.get("nombre"));
-                cliente.setEmail(csvRecord.get("email"));
-                cliente.setDni(Integer.parseInt(csvRecord.get("dni")));
-                clienteRepository.save(cliente); // Guarda el cliente en la base de datos
+
+                while ((linea = reader.readNext()) != null) {
+                    Carrera carrera = new Carrera();
+                    carrera.setNombre(linea[1]);
+                    carrera.setDuracion(Integer.parseInt(linea[2]));
+                    carreraRepository .save(carrera);// Guarda el cliente en la base de datos
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        try (FileReader reader = new FileReader(productosCSV);
-             CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
+        try (CSVReader reader = new CSVReader(new FileReader(estudianteCSV))) {
+            String[] linea;
+            reader.readNext(); // salta cabecera
 
-            for (CSVRecord csvRecord : csvParser) {
-                Producto producto = new Producto();
-                producto.setNombre(csvRecord.get("nombre"));
-                producto.setValor(Float.parseFloat(csvRecord.get("valor")));
-                producto.setRubro(csvRecord.get("rubro"));
-                productoRepository.save(producto); // Guarda el producto en la base de datos
+            while ((linea = reader.readNext()) != null) {
+                Estudiante estudiante = new Estudiante();
+                estudiante.setDni(linea[0]);
+                estudiante.setNombre(linea[1]);
+                estudiante.setApellido(linea[2]);
+                estudiante.setEdad(Integer.parseInt(linea[3]));
+                estudiante.setGenero(linea[4].charAt(0));
+                estudiante.setCiudad(linea[5]);
+                estudiante.setNumLibretaUni(linea[6]);
+                estudianteRepository.save(estudiante);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        try (FileReader reader = new FileReader(facturasCSV);
-             CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
 
-            for (CSVRecord csvRecord : csvParser) {
-                if (csvRecord.size() == 2) { // Asumiendo que hay dos columnas: id y cliente_id
-                    Long idFactura = Long.valueOf(csvRecord.get("idFactura"));
-                    Long idCliente = Long.valueOf(csvRecord.get("idCliente"));
 
-                    // Crea una instancia de Factura
-                    Factura factura = new Factura();
-                    factura.setId(idFactura);
+        try (CSVReader reader = new CSVReader(new FileReader(inscripcionCSV))) {
+            String[] linea;
+            reader.readNext(); // salta cabecera
 
-                    // Crea una instancia de Cliente y configura el ID del cliente
-                    Cliente cliente = new Cliente();
-                    cliente.setId(idCliente);
 
-                    // Establece la relación entre Factura y Cliente
-                    factura.setCliente(cliente);
-                    facturaRepository.save(factura); // Guarda el producto en la base de datos
+            while ((linea = reader.readNext()) != null) {
+
+                int dni = Integer.parseInt(linea[1]);
+                int idCarrera = Integer.parseInt(linea[2]);
+
+                Estudiante estudiante = estudianteRepository
+                        .findById(Long.valueOf(dni))
+                        .orElse(null);
+
+                Carrera carrera = carreraRepository
+                        .findById(Long.valueOf(idCarrera))
+                        .orElse(null);
+
+                if (estudiante != null && carrera != null) {
+
+                    Inscripcion inscripcion = new Inscripcion();
+
+                    inscripcion.setEstudiante(estudiante);
+                    inscripcion.setCarrera(carrera);
+
+                    inscripcion.setFechaInsc(Integer.parseInt(linea[3]));
+                    inscripcion.setFechaGrad(Integer.parseInt(linea[4]));
+                    inscripcion.setAntiguedad(Integer.parseInt(linea[5]));
+
+                    inscripcionRepository.save(inscripcion);
                 }
             }
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        try (FileReader reader = new FileReader(facturasProductosCSV);
-             CSVParser csvParser = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(reader)) {
-
-            for (CSVRecord csvRecord : csvParser) {
-                if (csvRecord.size() == 3) { // Asumiendo que hay tres columnas: id_factura, id_producto, cantidad
-                    Long idFactura = Long.valueOf(csvRecord.get("idFactura"));
-                    Long idProducto = Long.valueOf(csvRecord.get("idProducto"));
-                    Integer cantidad = Integer.valueOf(csvRecord.get("cantidad"));
-
-                    // Crea una instancia de FacturaProductoPK
-                    FacturaProductoPK facturaProductoPK = new FacturaProductoPK();
-                    facturaProductoPK.setIdFactura(idFactura);
-                    facturaProductoPK.setIdProducto(idProducto);
-
-                    // Crea una instancia de FacturaProducto y configura sus relaciones
-                    FacturaProducto facturaProducto = new FacturaProducto();
-                    facturaProducto.setId(facturaProductoPK);
-                    facturaProducto.setCantidad(cantidad);
-
-                    // Agrega facturaProducto a la lista facturaProductos de Factura
-                    Factura factura = new Factura();
-                    factura.setId(idFactura);
-                    facturaProducto.setFactura(factura);
-
-                    // Configura la relación con Producto si es necesario
-                    Producto producto = new Producto();
-                    producto.setId(idProducto);
-                    facturaProducto.setProducto(producto);
-
-                    facturaProductoRepository.save(facturaProducto); // Guarda el producto en la base de datos
-
-                }
-
-            }
         }
     }
 
-}
 
- */
+
+
 
 
