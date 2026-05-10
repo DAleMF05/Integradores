@@ -14,7 +14,7 @@ Content-Type: application/json
   "ciudad": "Quequen",
   "numLibretaUni": "LU213"
 }
-en
+
 ###
 
 GET http://localhost:8080/estudiantes/300
