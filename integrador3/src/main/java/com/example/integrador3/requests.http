@@ -1,0 +1,20 @@
+GET http://localhost:8080/estudiantes
+
+###
+
+POST http://localhost:8080/estudiantes
+Content-Type: application/json
+
+{
+  "dni": "46420776",
+  "nombre": "Nahuel",
+  "apellido": "García",
+  "edad": 22,
+  "genero": "M",
+  "ciudad": "Quequen",
+  "numLibretaUni": "LU213"
+}
+en
+###
+
+GET http://localhost:8080/estudiantes/300

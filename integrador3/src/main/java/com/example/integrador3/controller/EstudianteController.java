@@ -1,10 +1,14 @@
 package com.example.integrador3.controller;
 
+import com.example.integrador3.dto.CarreraDTO;
+import com.example.integrador3.dto.EstudianteDTO;
 import com.example.integrador3.service.EstudianteService;
 import com.example.integrador3.service.IEstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/estudiantes")
@@ -12,4 +16,23 @@ public class EstudianteController {
 
     @Autowired
     private EstudianteService estudianteService;
+
+
+    @PostMapping("")
+    public ResponseEntity<EstudianteDTO> save(@RequestBody EstudianteDTO estudiante) {
+        final var result = this.estudianteService.save(estudiante);
+        return ResponseEntity.accepted().body(result);
+
+    }
+
+    @GetMapping("")
+    public List<EstudianteDTO> getAll(){
+        return this.estudianteService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public EstudianteDTO getById( @PathVariable Long id ) {
+        return this.estudianteService.getById(id);
+    }
+
 }

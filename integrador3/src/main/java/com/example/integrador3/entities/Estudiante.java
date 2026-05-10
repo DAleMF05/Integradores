@@ -1,5 +1,6 @@
 package com.example.integrador3.entities;
 
+import com.example.integrador3.dto.EstudianteDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -38,6 +39,17 @@ public class Estudiante {
         this.genero = genero;
         this.ciudad = ciudad;
         this.numLibretaUni = numLibretaUni;
+        this.inscripciones = new ArrayList<>();
+    }
+
+    public Estudiante (EstudianteDTO estDTO) {
+        this.dni = estDTO.getDni();
+        this.nombre = estDTO.getNombre();
+        this.apellido = estDTO.getApellido();
+        this.edad = estDTO.getEdad();
+        this.genero = estDTO.getGenero();
+        this.ciudad = estDTO.getCiudad();
+        this.numLibretaUni = estDTO.getNumLibretaUni();
         this.inscripciones = new ArrayList<>();
     }
 
