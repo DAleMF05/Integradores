@@ -27,12 +27,15 @@ public class Carrera {
     // getters y setters
 
     public Carrera(String nombre, int duracion) {
-        this.duracion = duracion;
         this.nombre = nombre;
+        this.duracion = duracion;
         this.inscripciones = new ArrayList<>();
     }
 
     public Carrera(CarreraDTO carre) {
+        this.nombre = carre.getNombre();
+        this.duracion = carre.getDuracion();
+        this.inscripciones = new ArrayList<>();
 
     }
 }

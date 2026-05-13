@@ -43,11 +43,11 @@ public class CargaDeDatos {
             reader.readNext(); // salta cabecera
 
 
-                while ((linea = reader.readNext()) != null) {
-                    Carrera carrera = new Carrera();
-                    carrera.setNombre(linea[1]);
-                    carrera.setDuracion(Integer.parseInt(linea[2]));
-                    carreraRepository .save(carrera);// Guarda el cliente en la base de datos
+            while ((linea = reader.readNext()) != null) {
+                Carrera carrera = new Carrera();
+                carrera.setNombre(linea[1]);
+                carrera.setDuracion(Integer.parseInt(linea[2]));
+                carreraRepository .save(carrera);// Guarda el cliente en la base de datos
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,8 +109,12 @@ public class CargaDeDatos {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        }
     }
+}
+
+
+
+
 
 
 

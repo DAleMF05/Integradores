@@ -27,6 +27,7 @@ public class EstudianteController {
 
     @GetMapping("")
     public List<EstudianteDTO> getAll(){
+
         return this.estudianteService.getAll();
     }
 
@@ -34,5 +35,6 @@ public class EstudianteController {
     public EstudianteDTO getById( @PathVariable Long id ) {
         return this.estudianteService.getById(id);
     }
+
 
 }
