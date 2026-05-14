@@ -22,7 +22,8 @@ public class Carrera {
     private int duracion;
 
     @OneToMany(mappedBy = "carrera")
-    private List<Inscripcion> inscripciones;
+    private List<Inscripcion> inscripciones = new ArrayList<>();
+
 
     // getters y setters
 

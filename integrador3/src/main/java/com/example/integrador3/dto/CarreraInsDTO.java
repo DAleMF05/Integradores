@@ -3,6 +3,8 @@ package com.example.integrador3.dto;
 import com.example.integrador3.entities.Carrera;
 import lombok.*;
 
+import java.util.ArrayList;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,5 +22,13 @@ public class CarreraInsDTO {
         this.nombre = nombre;
         this.duracion = duracion;
         this.inscriptos = cantidadInscriptos;
+    }
+
+    public CarreraInsDTO(Carrera carrera) {
+        this.idCarrera = carrera.getIdCarrera();
+        this.nombre = carrera.getNombre();
+        this.duracion = carrera.getDuracion();
+        this.inscriptos = 0;
+
     }
 }

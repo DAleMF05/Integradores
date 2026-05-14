@@ -39,6 +39,12 @@ public class CarreraService implements ICarreraService {
         return this.carreraRepository.findById(id).map(CarreraDTO::new).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<CarreraInsDTO> buscarInscriptos() {
+        return this.carreraRepository.buscarInscriptos();
+    }
+
 
 //    @Override
 //    @Transactional(readOnly = true)

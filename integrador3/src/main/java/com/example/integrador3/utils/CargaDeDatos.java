@@ -80,23 +80,23 @@ public class CargaDeDatos {
 
             while ((linea = reader.readNext()) != null) {
 
-                int dni = Integer.parseInt(linea[1]);
+                Estudiante estudiante = estudianteRepository
+                        .findByDni(linea[1]).orElse(null);
+
                 int idCarrera = Integer.parseInt(linea[2]);
 
-                Estudiante estudiante = estudianteRepository
-                        .findById(Long.valueOf(dni))
-                        .orElse(null);
 
                 Carrera carrera = carreraRepository
-                        .findById(Long.valueOf(idCarrera))
+                        .findById((long) idCarrera)
                         .orElse(null);
+
 
                 if (estudiante != null && carrera != null) {
 
                     Inscripcion inscripcion = new Inscripcion();
 
-                    inscripcion.setEstudiante(estudiante);
                     inscripcion.setCarrera(carrera);
+                    inscripcion.setEstudiante(estudiante);
 
                     inscripcion.setFechaInsc(Integer.parseInt(linea[3]));
                     inscripcion.setFechaGrad(Integer.parseInt(linea[4]));

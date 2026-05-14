@@ -13,6 +13,21 @@ import java.util.List;
 @Repository
 public interface ICarreraRepository extends JpaRepository<Carrera, Long> {
 
+    @Query("""
+        SELECT new com.example.integrador3.dto.CarreraInsDTO(
+            c.idCarrera,
+            c.nombre,
+            c.duracion,
+            COUNT(i.idInscripcion)
+        )
+        FROM Carrera c
+        JOIN c.inscripciones i
+        GROUP BY c.idCarrera, c.nombre, c.duracion
+        ORDER BY COUNT(i.idInscripcion) DESC
+    """)
+    List<CarreraInsDTO> buscarInscriptos();
+
+
 
 
 

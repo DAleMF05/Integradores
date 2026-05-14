@@ -38,6 +38,10 @@ public class CarreraController {
         return this.carreraService.getById(id);
     }
 
+    @GetMapping("/inscriptos")
+    public List<CarreraInsDTO> buscarIncriptos(){
+        return this.carreraService.buscarInscriptos();
+    }
 
 
 }

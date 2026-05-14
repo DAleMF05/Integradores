@@ -13,4 +13,6 @@ public interface ICarreraService {
     List<CarreraDTO> getAll();
 
     CarreraDTO getById(Long id);
+
+    List<CarreraInsDTO> buscarInscriptos();
 }
