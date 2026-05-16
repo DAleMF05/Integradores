@@ -27,7 +27,7 @@ public class EstudianteService implements IEstudianteService {
     @Override
     @Transactional(readOnly = true)
     public List<EstudianteDTO> getAll() {
-        return this.estudianteRepository.findAll().stream().map(EstudianteDTO::new).toList();
+        return this.estudianteRepository.getAll();
     }
 
     @Override
