@@ -27,4 +27,6 @@ public class InscripcionDTO {
         this.fechaGrad = fechaGrad;
         this.antiguedad = antiguedad;
     }
+
+
 }

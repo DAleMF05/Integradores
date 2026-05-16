@@ -16,6 +16,7 @@ public class EstudianteService implements IEstudianteService {
     @Autowired
     private IEstudianteRepository estudianteRepository;
 
+    @Override
     @Transactional
     public EstudianteDTO save(EstudianteDTO e) {
         final var estudiante = new Estudiante(e);
@@ -23,16 +24,23 @@ public class EstudianteService implements IEstudianteService {
         return new EstudianteDTO(result);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public List<EstudianteDTO> getAll() {
         return this.estudianteRepository.findAll().stream().map(EstudianteDTO::new).toList();
     }
 
+    @Override
     @Transactional(readOnly = true)
     public EstudianteDTO getById(Long id) {
         return this.estudianteRepository.findById(id).map(EstudianteDTO::new).orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public EstudianteDTO getByLibretaUni(String lu) {
+        return this.estudianteRepository.findByNumLibretaUni(lu).map(EstudianteDTO::new).orElseThrow(() -> new RuntimeException("Estudiante no encontrado con esa LU"));
+    }
 
 
 }

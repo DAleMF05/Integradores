@@ -25,14 +25,12 @@ public class CarreraDTO {
     private Long idCarrera;
     private String nombre;
     private int duracion;
-    private List<InscripcionDTO> inscripciones;
 
 
     public CarreraDTO(Carrera carrera) {
         this.idCarrera = carrera.getIdCarrera();
         this.nombre = carrera.getNombre();
         this.duracion = carrera.getDuracion();
-        this.inscripciones = new ArrayList<>();
     }
 
 }

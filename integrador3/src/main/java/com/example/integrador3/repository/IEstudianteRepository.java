@@ -12,4 +12,6 @@ public interface IEstudianteRepository extends JpaRepository<Estudiante, Long> {
 
     Optional<Estudiante> findByDni(String dni);
 
+    Optional<Estudiante> findByNumLibretaUni(String numLibretaUni);
+
 }

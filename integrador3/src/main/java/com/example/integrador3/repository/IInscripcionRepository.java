@@ -14,7 +14,7 @@ public interface IInscripcionRepository extends JpaRepository<Inscripcion, Long>
     @Query("""
         SELECT new com.example.integrador3.dto.InscripcionDTO(
             i.idInscripcion,
-            e.dni,
+            e.idEstudiante,
             c.idCarrera,
             i.fechaInsc,
             i.fechaGrad,

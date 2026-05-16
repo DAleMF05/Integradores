@@ -33,7 +33,14 @@ public class EstudianteController {
 
     @GetMapping("/{id}")
     public EstudianteDTO getById( @PathVariable Long id ) {
+
         return this.estudianteService.getById(id);
+    }
+
+    @GetMapping("/lu/{lu}")
+    public EstudianteDTO getByLibretaUni(@PathVariable String lu){
+
+        return this.estudianteService.getByLibretaUni(lu);
     }
 
 
