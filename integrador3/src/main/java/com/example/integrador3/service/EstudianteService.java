@@ -42,5 +42,11 @@ public class EstudianteService implements IEstudianteService {
         return this.estudianteRepository.findByNumLibretaUni(lu).map(EstudianteDTO::new).orElseThrow(() -> new RuntimeException("Estudiante no encontrado con esa LU"));
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<EstudianteDTO> getByGenero(char gen) {
+        return this.estudianteRepository.getByGenero(gen);
+    }
+
 
 }

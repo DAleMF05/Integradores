@@ -31,4 +31,21 @@ public interface IEstudianteRepository extends JpaRepository<Estudiante, Long> {
         """)
     List<EstudianteDTO> getAll();
 
+
+    @Query("""
+        SELECT new com.example.integrador3.dto.EstudianteDTO(
+            e.idEstudiante,
+            e.dni,
+            e.nombre,
+            e.apellido,
+            e.edad,
+            e.genero,
+            e.ciudad,
+            e.numLibretaUni)
+            FROM Estudiante e
+            WHERE e.genero = :gen
+
+        """)
+    List<EstudianteDTO> getByGenero(char gen);
+
 }

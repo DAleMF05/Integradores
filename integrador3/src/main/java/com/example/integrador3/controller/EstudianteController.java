@@ -45,5 +45,8 @@ public class EstudianteController {
         return this.estudianteService.getByLibretaUni(lu);
     }
 
-
+    @GetMapping("/genero/{gen}")
+    public List<EstudianteDTO> getByGenero(@PathVariable char gen){
+        return this.estudianteService.getByGenero(gen);
+    }
 }

@@ -14,4 +14,6 @@ public interface IEstudianteService {
     EstudianteDTO getById(Long id);
 
     EstudianteDTO getByLibretaUni(String lu);
+
+    List<EstudianteDTO> getByGenero(char gen);
 }
