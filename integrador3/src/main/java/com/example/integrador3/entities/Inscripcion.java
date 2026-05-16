@@ -37,5 +37,5 @@ public class Inscripcion {
         this.carrera = carrera;
     }
 
-    // getters y setters
+
 }
