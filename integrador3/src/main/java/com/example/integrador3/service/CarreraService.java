@@ -2,6 +2,7 @@ package com.example.integrador3.service;
 
 import com.example.integrador3.dto.CarreraDTO;
 import com.example.integrador3.dto.CarreraInsDTO;
+import com.example.integrador3.dto.ReporteCarreraDTO;
 import com.example.integrador3.entities.Carrera;
 import com.example.integrador3.repository.ICarreraRepository;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +44,12 @@ public class CarreraService implements ICarreraService {
     @Transactional(readOnly = true)
     public List<CarreraInsDTO> buscarInscriptos() {
         return this.carreraRepository.buscarInscriptos();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ReporteCarreraDTO> generarReporte() {
+        return this.carreraRepository.generarReporte();
     }
 
 

@@ -2,6 +2,7 @@ package com.example.integrador3.controller;
 
 import com.example.integrador3.dto.CarreraDTO;
 import com.example.integrador3.dto.CarreraInsDTO;
+import com.example.integrador3.dto.ReporteCarreraDTO;
 import com.example.integrador3.entities.Carrera;
 import com.example.integrador3.repository.ICarreraRepository;
 import com.example.integrador3.service.CarreraService;
@@ -41,6 +42,11 @@ public class CarreraController {
     @GetMapping("/inscriptos")
     public List<CarreraInsDTO> buscarIncriptos(){
         return this.carreraService.buscarInscriptos();
+    }
+
+    @GetMapping("/reporte")
+    public List<ReporteCarreraDTO> generarReporte() {
+        return this.carreraService.generarReporte();
     }
 
 
