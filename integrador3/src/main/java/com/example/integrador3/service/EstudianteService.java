@@ -3,7 +3,7 @@ package com.example.integrador3.service;
 import com.example.integrador3.dto.EstudianteDTO;
 import com.example.integrador3.entities.Estudiante;
 import com.example.integrador3.repository.IEstudianteRepository;
-import com.example.integrador3.repository.IInscripcionRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,5 +48,10 @@ public class EstudianteService implements IEstudianteService {
         return this.estudianteRepository.getByGenero(gen);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<EstudianteDTO> getByCarreraAndCiudad(String carrera, String ciudad) {
+        return this.estudianteRepository.getEstudiantesByCarreraAndCiudad(carrera, ciudad);
+    }
 
 }

@@ -1,9 +1,8 @@
 package com.example.integrador3.controller;
 
-import com.example.integrador3.dto.CarreraDTO;
 import com.example.integrador3.dto.EstudianteDTO;
 import com.example.integrador3.service.EstudianteService;
-import com.example.integrador3.service.IEstudianteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,5 +47,10 @@ public class EstudianteController {
     @GetMapping("/genero/{gen}")
     public List<EstudianteDTO> getByGenero(@PathVariable char gen){
         return this.estudianteService.getByGenero(gen);
+    }
+
+    @GetMapping("/carrera/{carrera}")
+    public List<EstudianteDTO> getByCarreraYciudad(@PathVariable String carrera, @RequestParam String ciudad) {
+        return this.estudianteService.getByCarreraAndCiudad(carrera, ciudad);
     }
 }

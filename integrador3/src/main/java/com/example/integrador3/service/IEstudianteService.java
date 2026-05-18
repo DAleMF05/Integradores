@@ -16,4 +16,6 @@ public interface IEstudianteService {
     EstudianteDTO getByLibretaUni(String lu);
 
     List<EstudianteDTO> getByGenero(char gen);
+
+    List<EstudianteDTO> getByCarreraAndCiudad(String carrera, String ciudad);
 }

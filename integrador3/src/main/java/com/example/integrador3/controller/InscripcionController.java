@@ -1,8 +1,6 @@
 package com.example.integrador3.controller;
 
 import com.example.integrador3.dto.InscripcionDTO;
-import com.example.integrador3.entities.Inscripcion;
-import com.example.integrador3.service.CarreraService;
 import com.example.integrador3.service.InscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

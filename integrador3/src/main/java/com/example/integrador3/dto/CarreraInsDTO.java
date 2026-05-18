@@ -3,8 +3,6 @@ package com.example.integrador3.dto;
 import com.example.integrador3.entities.Carrera;
 import lombok.*;
 
-import java.util.ArrayList;
-
 @Getter
 @Setter
 @AllArgsConstructor
