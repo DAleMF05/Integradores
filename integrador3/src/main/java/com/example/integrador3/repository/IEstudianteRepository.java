@@ -18,7 +18,6 @@ public interface IEstudianteRepository extends JpaRepository<Estudiante, Long> {
 
     @Query("""
         SELECT new com.example.integrador3.dto.EstudianteDTO(
-            e.idEstudiante,
             e.dni,
             e.nombre,
             e.apellido,
@@ -34,7 +33,6 @@ public interface IEstudianteRepository extends JpaRepository<Estudiante, Long> {
 
     @Query("""
         SELECT new com.example.integrador3.dto.EstudianteDTO(
-            e.idEstudiante,
             e.dni,
             e.nombre,
             e.apellido,
@@ -50,7 +48,6 @@ public interface IEstudianteRepository extends JpaRepository<Estudiante, Long> {
 
     @Query("""
         SELECT new com.example.integrador3.dto.EstudianteDTO(
-            e.idEstudiante,
             e.dni, e.nombre,
             e.apellido,
             e.edad,

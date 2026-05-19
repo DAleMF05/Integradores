@@ -11,7 +11,6 @@ import lombok.*;
 @ToString
 
 @JsonPropertyOrder({
-        "idCarrera",
         "nombre",
         "duracion",
         "inscripciones"
@@ -19,13 +18,11 @@ import lombok.*;
 
 public class CarreraDTO {
 
-    private Long idCarrera;
     private String nombre;
     private int duracion;
 
 
     public CarreraDTO(Carrera carrera) {
-        this.idCarrera = carrera.getIdCarrera();
         this.nombre = carrera.getNombre();
         this.duracion = carrera.getDuracion();
     }

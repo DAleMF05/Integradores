@@ -11,21 +11,17 @@ import lombok.*;
 @ToString
 public class InscripcionDTO {
 
- private Long idInscripcion;
-    private Long idEstudiante;
-    private Long idCarrera;
+    private String dniEstudiante;
+    private String nombreCarrera;
     private int fechaInsc;
     private int fechaGrad;
     private int antiguedad;
 
     public InscripcionDTO(Inscripcion i) {
-        this.idInscripcion = i.getIdInscripcion();
-        this.idEstudiante = i.getEstudiante().getIdEstudiante();
-        this.idCarrera = i.getCarrera().getIdCarrera();
+        this.dniEstudiante = i.getEstudiante().getDni();
+        this.nombreCarrera = i.getCarrera().getNombre();
         this.fechaInsc = i.getFechaInsc();
         this.fechaGrad = i.getFechaGrad();
         this.antiguedad = i.getAntiguedad();
     }
-
-    
 }

@@ -11,7 +11,6 @@ import lombok.*;
 
 public class EstudianteDTO {
 
-    private Long idEstudiante;
     private String dni;
     private String nombre;
     private String apellido;
@@ -22,7 +21,6 @@ public class EstudianteDTO {
 
 
     public EstudianteDTO(Estudiante e) {
-        this.idEstudiante = e.getIdEstudiante();
         this.dni = e.getDni();
         this.nombre = e.getNombre();
         this.apellido = e.getApellido();

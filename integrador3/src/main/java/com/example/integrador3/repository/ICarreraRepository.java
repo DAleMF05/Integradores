@@ -8,20 +8,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ICarreraRepository extends JpaRepository<Carrera, Long> {
 
+    Optional<Carrera> findByNombre(String nombre);
+
     @Query("""
         SELECT new com.example.integrador3.dto.CarreraInsDTO(
-            c.idCarrera,
             c.nombre,
             c.duracion,
             COUNT(i.idInscripcion)
         )
         FROM Carrera c
         JOIN c.inscripciones i
-        GROUP BY c.idCarrera, c.nombre, c.duracion
+        GROUP BY c.nombre, c.duracion
         ORDER BY COUNT(i.idInscripcion) DESC
     """)
     List<CarreraInsDTO> buscarInscriptos();

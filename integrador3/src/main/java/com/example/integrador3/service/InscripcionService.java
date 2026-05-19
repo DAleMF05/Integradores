@@ -31,19 +31,12 @@ public class InscripcionService implements IInscripcionService {
     @Override
     @Transactional
     public InscripcionDTO save(InscripcionDTO inscripcionDTO) {
-        Estudiante estudiante = estudianteRepository.findById(inscripcionDTO.getIdEstudiante())
+        Estudiante estudiante = estudianteRepository.findByDni(inscripcionDTO.getDniEstudiante())
                 .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
 
-        Carrera carrera = carreraRepository.findById(inscripcionDTO.getIdCarrera())
+        Carrera carrera = carreraRepository.findByNombre(inscripcionDTO.getNombreCarrera())
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
-        // Inscripcion inscripcion = new Inscripcion();
-        // inscripcion.setEstudiante(estudiante);
-        // inscripcion.setCarrera(carrera);
-        // inscripcion.setFechaInsc(inscripcionDTO.getFechaInsc());
-        // inscripcion.setFechaGrad(inscripcionDTO.getFechaGrad());
-        // inscripcion.setAntiguedad(inscripcionDTO.getAntiguedad());
-        
         Inscripcion inscripcion = new Inscripcion(
             inscripcionDTO.getFechaInsc(),
             inscripcionDTO.getFechaGrad(),
@@ -53,7 +46,7 @@ public class InscripcionService implements IInscripcionService {
         );
 
         Inscripcion savedInscripcion = inscripcionRepository.save(inscripcion);
-        return new InscripcionDTO(savedInscripcion.getIdInscripcion(), savedInscripcion.getEstudiante().getIdEstudiante(), savedInscripcion.getCarrera().getIdCarrera(), savedInscripcion.getFechaInsc(), savedInscripcion.getFechaGrad(), savedInscripcion.getAntiguedad());
+        return new InscripcionDTO(savedInscripcion);
     }
 
 }
