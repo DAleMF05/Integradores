@@ -25,11 +25,10 @@ public interface IEstudianteRepository extends JpaRepository<Estudiante, Long> {
             e.genero,
             e.ciudad,
             e.numLibretaUni)
-            FROM Estudiante e
+            FROM Estudiante e 
             ORDER BY e.dni
         """)
     List<EstudianteDTO> getAll();
-
 
     @Query("""
         SELECT new com.example.integrador3.dto.EstudianteDTO(
