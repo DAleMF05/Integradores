@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: apigateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: mcsv-estudiantes
+          uri: http://localhost:8001
+          predicates:
+            - Path=/estudiantes/**
+
+        - id: mcsv-carreras
+          uri: http://localhost:8002
+          predicates:
+            - Path=/carreras/**
+
+        - id: mcsv-inscripciones
+          uri: http://localhost:8003
+          predicates:
+            - Path=/inscripciones/**
+
