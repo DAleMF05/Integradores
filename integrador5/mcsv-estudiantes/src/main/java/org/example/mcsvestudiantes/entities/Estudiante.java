@@ -2,6 +2,7 @@ package org.example.mcsvestudiantes.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.mcsvestudiantes.dto.EstudianteDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +42,16 @@ public class Estudiante {
 //        this.inscripciones = new ArrayList<>();
     }
 
-//    public Estudiante (EstudianteDTO estDTO) {
-//        this.dni = estDTO.getDni();
-//        this.nombre = estDTO.getNombre();
-//        this.apellido = estDTO.getApellido();
-//        this.edad = estDTO.getEdad();
-//        this.genero = estDTO.getGenero();
-//        this.ciudad = estDTO.getCiudad();
-//        this.numLibretaUni = estDTO.getNumLibretaUni();
-//        this.inscripciones = new ArrayList<>();
-//    }
+    public Estudiante (EstudianteDTO estDTO) {
+        this.dni = estDTO.getDni();
+        this.nombre = estDTO.getNombre();
+        this.apellido = estDTO.getApellido();
+        this.edad = estDTO.getEdad();
+        this.genero = estDTO.getGenero();
+        this.ciudad = estDTO.getCiudad();
+        this.numLibretaUni = estDTO.getNumLibretaUni();
+        this.inscripciones = new ArrayList<>();
+    }
 
     // getters y setters
 }

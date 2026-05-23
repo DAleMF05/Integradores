@@ -1,12 +1,11 @@
-package com.example.integrador3.controller;
+package org.example.mcsvestudiantes.controller;
 
-import com.example.integrador3.dto.EstudianteDTO;
-import com.example.integrador3.service.EstudianteService;
+import org.example.mcsvestudiantes.dto.EstudianteDTO;
+import org.example.mcsvestudiantes.service.EstudianteService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -16,18 +15,15 @@ public class EstudianteController {
     @Autowired
     private EstudianteService estudianteService;
 
-
     @PostMapping("")
     public ResponseEntity<EstudianteDTO> save(@RequestBody EstudianteDTO estudiante) {
         final var result = this.estudianteService.save(estudiante);
         return ResponseEntity.accepted().body(result);
-
     }
 
     //ordenados por dni
     @GetMapping("")
     public List<EstudianteDTO> getAll(){
-
         return this.estudianteService.getAll();
     }
 
@@ -37,9 +33,8 @@ public class EstudianteController {
     }
 
     @GetMapping("/lu/{lu}")
-    public EstudianteDTO getByLibretaUni(@PathVariable String lu){
-
-        return this.estudianteService.getByLibretaUni(lu);
+    public EstudianteDTO getByLibretaUni( @PathVariable String lu ) {
+        return this.estudianteService.getByLibretaUni((lu));
     }
 
     @GetMapping("/genero/{gen}")
@@ -48,7 +43,8 @@ public class EstudianteController {
     }
 
     @GetMapping("/carrera/{carrera}")
-    public List<EstudianteDTO> getByCarreraYciudad(@PathVariable String carrera, @RequestParam String ciudad) {
+    public List<EstudianteDTO> getByCarreraYciudad(  @PathVariable String carrera, @RequestParam String ciudad) {
         return this.estudianteService.getByCarreraAndCiudad(carrera, ciudad);
     }
+
 }
