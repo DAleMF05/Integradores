@@ -15,6 +15,7 @@ public class EstudianteController {
     @Autowired
     private EstudianteService estudianteService;
 
+    @PostMapping("")
     public ResponseEntity<EstudianteDTO> save(@RequestBody EstudianteDTO estudiante) {
         final var result = this.estudianteService.save(estudiante);
         return ResponseEntity.accepted().body(result);
@@ -34,6 +35,11 @@ public class EstudianteController {
     @GetMapping("/lu/{lu}")
     public EstudianteDTO getByLibretaUni( @PathVariable String lu ) {
         return this.estudianteService.getByLibretaUni((lu));
+    }
+
+    @GetMapping("/genero/{gen}")
+    public List<EstudianteDTO> getByGenero(@PathVariable char gen){
+        return this.estudianteService.getByGenero(gen);
     }
 
     @GetMapping("/carrera/{carrera}")

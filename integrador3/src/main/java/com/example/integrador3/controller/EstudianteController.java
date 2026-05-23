@@ -24,7 +24,6 @@ public class EstudianteController {
 
     }
 
-
     //ordenados por dni
     @GetMapping("")
     public List<EstudianteDTO> getAll(){
@@ -34,7 +33,6 @@ public class EstudianteController {
 
     @GetMapping("/{id}")
     public EstudianteDTO getById( @PathVariable Long id ) {
-
         return this.estudianteService.getById(id);
     }
 
