@@ -1,48 +1,77 @@
 package com.example.integrador3;
 
-import com.example.integrador3.entities.Estudiante;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import com.example.integrador3.dto.EstudianteDTO;
+import com.example.integrador3.exceptions.EstudianteExc.EstudianteNoEncontradoException;
+import com.example.integrador3.exceptions.EstudianteExc.LUNoEncontradaException;
+import com.example.integrador3.service.EstudianteService;
 import org.junit.Assert;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
+import static org.assertj.core.api.Fail.fail;
 
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class EstudianteTest {
 
-    static List<Estudiante> estudiantes = new ArrayList<>();
+    @Autowired
+    private EstudianteService estudianteService;
+
 
     @BeforeClass
-    public static void cargarEstudiantesEjemplo() throws Exception {
+    public static void setUpBeforeClass() throws Exception {
 
-        Estudiante e1 = new Estudiante("26.150.235", "Juan", "Perez", 22, 'M', "Tandil", "LU001");
-        Estudiante e2 = new Estudiante("27.280.234", "Pedro", "Garcia", 23, 'M', "Olavarria", "LU002");
-        Estudiante e3 = new Estudiante("28.184.259", "Maria", "Lopez", 21, 'F', "Tandil", "LU003");
-
-        estudiantes.add(e1);
-        estudiantes.add(e2);
-        estudiantes.add(e3);
+        System.out.println("==== Iniciando tests de EstudianteService ====");
     }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-        System.out.println("EstudianteTest -> AfterClass ");
+
+        System.out.println("==== Finalizando tests de EstudianteService ====");
+    }
+
+
+    @Test
+    public void testGetById() {
+        System.out.println("test 1");
+        EstudianteDTO estudiante = estudianteService.getById(1L);
+
+        Assert.assertNotNull(estudiante);
     }
 
     @Test
-    public void testAgregarEstudiante() {
-        int cantAntes = estudiantes.size();
-        estudiantes.add(new Estudiante("45.321.456", "Fermin", "Rodriguez", 25, 'M', "Azul", "LU004"));
-        int cantDespues = estudiantes.size();
-        Assert.assertEquals(cantAntes + 1, cantDespues);
+    public void testGetByIdInexistente() {
+
+        try {
+            estudianteService.getById(999L);
+//            Assert.fail("Se esperaba una EstudianteNoEncontradoException");
+            fail("Se esperaba una EstudianteNoEncontradoException");
+        } catch (EstudianteNoEncontradoException e) {
+            Assert.assertEquals(
+                    "Estudiante no encontrado con id: 999",
+                    e.getMessage()
+            );
+        }
     }
 
     @Test
-    public void testAgregaEstudianteExacto() {
-        Estudiante e = new Estudiante("45.321.456", "Fermin", "Rodriguez", 25, 'M', "Azul", "LU004");
-        estudiantes.add(e);
-        Estudiante eGuardado = estudiantes.get(estudiantes.size() - 1);
-        Assert.assertSame("No se recibio el mismo estudiante que se esperaba", e, eGuardado);
+    public void testGetByLibretaUniInexistente() {
+
+        try {
+
+            estudianteService.getByLibretaUni("LU999");
+
+            fail("Se esperaba una LUNoEncontradaException");
+
+        } catch (LUNoEncontradaException e) {
+
+            Assert.assertEquals(
+                    "Estudiante no encontrado con esa LU",
+                    e.getMessage()
+            );
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.example.integrador3.dto.CarreraDTO;
 import com.example.integrador3.dto.CarreraInsDTO;
 import com.example.integrador3.dto.ReporteCarreraDTO;
 import com.example.integrador3.entities.Carrera;
+import com.example.integrador3.exceptions.CarreraExc.CarreraNoEncontradaException;
 import com.example.integrador3.repository.ICarreraRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class CarreraService implements ICarreraService {
     @Override
     @Transactional(readOnly = true)
     public CarreraDTO getById(Long id) {
-        return this.carreraRepository.findById(id).map(CarreraDTO::new).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+        return this.carreraRepository.findById(id).map(CarreraDTO::new).orElseThrow(() -> new CarreraNoEncontradaException("Carrera no encontrada"));
     }
 
     @Override

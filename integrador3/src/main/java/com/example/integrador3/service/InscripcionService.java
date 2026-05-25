@@ -4,6 +4,8 @@ import com.example.integrador3.dto.InscripcionDTO;
 import com.example.integrador3.entities.Carrera;
 import com.example.integrador3.entities.Estudiante;
 import com.example.integrador3.entities.Inscripcion;
+import com.example.integrador3.exceptions.CarreraExc.CarreraNoEncontradaException;
+import com.example.integrador3.exceptions.EstudianteExc.EstudianteNoEncontradoException;
 import com.example.integrador3.repository.ICarreraRepository;
 import com.example.integrador3.repository.IEstudianteRepository;
 import com.example.integrador3.repository.IInscripcionRepository;
@@ -32,10 +34,10 @@ public class InscripcionService implements IInscripcionService {
     @Transactional
     public InscripcionDTO save(InscripcionDTO inscripcionDTO) {
         Estudiante estudiante = estudianteRepository.findByDni(inscripcionDTO.getDniEstudiante())
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+                .orElseThrow(() -> new EstudianteNoEncontradoException("Estudiante no encontrado"));
 
         Carrera carrera = carreraRepository.findByNombre(inscripcionDTO.getNombreCarrera())
-                .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+                .orElseThrow(() -> new CarreraNoEncontradaException("Carrera no encontrada"));
 
         Inscripcion inscripcion = new Inscripcion(
             inscripcionDTO.getFechaInsc(),

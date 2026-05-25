@@ -2,6 +2,8 @@ package com.example.integrador3.service;
 
 import com.example.integrador3.dto.EstudianteDTO;
 import com.example.integrador3.entities.Estudiante;
+import com.example.integrador3.exceptions.EstudianteExc.EstudianteNoEncontradoException;
+import com.example.integrador3.exceptions.EstudianteExc.LUNoEncontradaException;
 import com.example.integrador3.repository.IEstudianteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +35,13 @@ public class EstudianteService implements IEstudianteService {
     @Override
     @Transactional(readOnly = true)
     public EstudianteDTO getById(Long id) {
-        return this.estudianteRepository.findById(id).map(EstudianteDTO::new).orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+        return this.estudianteRepository.findById(id).map(EstudianteDTO::new).orElseThrow(() -> new EstudianteNoEncontradoException("Estudiante no encontrado con id: " + id));
     }
 
     @Override
     @Transactional(readOnly = true)
     public EstudianteDTO getByLibretaUni(String lu) {
-        return this.estudianteRepository.findByNumLibretaUni(lu).map(EstudianteDTO::new).orElseThrow(() -> new RuntimeException("Estudiante no encontrado con esa LU"));
+        return this.estudianteRepository.findByNumLibretaUni(lu).map(EstudianteDTO::new).orElseThrow(() -> new LUNoEncontradaException("Estudiante no encontrado con esa LU"));
     }
 
     @Override

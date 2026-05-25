@@ -1,56 +1,76 @@
 package com.example.integrador3;
 
+import com.example.integrador3.dto.CarreraDTO;
 import com.example.integrador3.entities.Carrera;
+import com.example.integrador3.exceptions.CarreraExc.CarreraNoEncontradaException;
+import com.example.integrador3.service.CarreraService;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.Assert;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
 import java.util.Random;
 
+import static org.assertj.core.api.Fail.fail;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class CarreraTest {
 
-    static Carrera ejemplos[];
-    static Carrera casoActual;
+    @Autowired
+    private CarreraService carreraService;
 
     @BeforeClass
-    public static void cargarEjemplos() throws Exception {
-        ejemplos = new Carrera[3];
+    public static void setUpBeforeClass() throws Exception {
 
-        ejemplos[0] = new Carrera("TUDAI", 3);
-        ejemplos[1] = new Carrera("Ingenieria de Sistemas", 5);
-        ejemplos[2] = new Carrera("Licenciatura en Matematica", 4);
+        System.out.println("==== Iniciando tests de CarreraService ====");
     }
 
     @AfterClass
     public static void tearDownAfterClass() throws Exception {
-        System.out.println("CarreraTest -> AfterClass ");
-    }
 
-    @Before
-    public void elegirUno() throws Exception {
-        // generador de numeros aleatorios
-        Random generadorAleatorios = new Random();
-        // genera un numero entre 0 y longitud-1 y lo guarda en la variable numeroAleatorio
-        int numeroAleatorio = generadorAleatorios.nextInt(ejemplos.length);
-        casoActual = ejemplos[numeroAleatorio];
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        System.out.println("CarreraTest -> After");
+        System.out.println("==== Finalizando tests de CarreraService ====");
     }
 
     @Test
-    public void testDuracionValida() {
-        int obtenido = casoActual.getDuracion();
-        int esperado = 0;
-        if (casoActual.getNombre().equals("TUDAI")) esperado = 3;
-        else if (casoActual.getNombre().equals("Ingenieria de Sistemas")) esperado = 5;
-        else if (casoActual.getNombre().equals("Licenciatura en Matematica")) esperado = 4;
+    public void testGetCarreraById() {
 
-        Assert.assertEquals(esperado, obtenido);
+        CarreraDTO carrera = carreraService.getById(1L);
+
+        Assert.assertNotNull(carrera);
+    }
+
+    @Test
+    public void testGetCarreraByIdInexistente() {
+
+        try {
+
+            carreraService.getById(999L);
+
+            fail("Se esperaba una CarreraNoEncontradaException");
+
+        } catch (CarreraNoEncontradaException e) {
+
+            Assert.assertEquals(
+                    "Carrera no encontrada",
+                    e.getMessage()
+            );
+        }
+    }
+
+    @Test
+    public void testGetAllCarreras() {
+
+        List<CarreraDTO> carreras = carreraService.getAll();
+
+        Assert.assertNotNull(carreras);
+        Assert.assertTrue(carreras.size() > 0);
     }
 }
