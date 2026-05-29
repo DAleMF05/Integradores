@@ -14,6 +14,8 @@ public interface ICarreraService {
 
     CarreraDTO getById(Long id);
 
+    CarreraDTO findByNombre(String nombre);
+
     List<CarreraInsDTO> buscarInscriptos();
 
     List<ReporteCarreraDTO> generarReporte();

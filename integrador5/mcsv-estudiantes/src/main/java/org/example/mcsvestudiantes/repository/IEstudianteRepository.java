@@ -58,4 +58,5 @@ public interface IEstudianteRepository  extends JpaRepository<Estudiante, Long> 
         WHERE c.nombre = :carrera AND e.ciudad = :ciudad
         """)
     List<EstudianteDTO> getEstudiantesByCarreraAndCiudad(String carrera, String ciudad);
+
 }

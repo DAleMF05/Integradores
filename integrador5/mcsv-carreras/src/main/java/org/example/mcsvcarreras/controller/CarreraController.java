@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/carreras")
+@RequestMapping("/api/carreras")
 public class CarreraController {
 
     @Autowired
@@ -34,6 +34,11 @@ public class CarreraController {
         return this.carreraService.getById(id);
     }
 
+    @GetMapping("/nombre/{nombre}")
+    public CarreraDTO findByNombre(@PathVariable String nombre){
+        return this.carreraService.findByNombre(nombre);
+    }
+
     @GetMapping("/inscriptos")
     public List<CarreraInsDTO> buscarIncriptos(){
         return this.carreraService.buscarInscriptos();
@@ -43,6 +48,5 @@ public class CarreraController {
     public List<ReporteCarreraDTO> generarReporte() {
         return this.carreraService.generarReporte();
     }
-
 
 }

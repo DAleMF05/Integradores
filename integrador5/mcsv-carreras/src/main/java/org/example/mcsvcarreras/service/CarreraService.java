@@ -32,7 +32,6 @@ public class CarreraService implements ICarreraService {
     }
 
 
-
     @Override
     @Transactional(readOnly = true)
     public List<CarreraDTO> getAll() {
@@ -43,6 +42,12 @@ public class CarreraService implements ICarreraService {
     @Transactional(readOnly = true)
     public CarreraDTO getById(Long id) {
         return this.carreraRepository.findById(id).map(CarreraDTO::new).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CarreraDTO findByNombre(String nombre) {
+        return this.carreraRepository.findByNombre(nombre).map(CarreraDTO::new).orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
     }
 
     @Override

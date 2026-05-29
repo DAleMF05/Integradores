@@ -30,9 +30,15 @@ public class EstudianteService implements IEstudianteService {
 
 
     @Override
-//    @Transactional(readOnly = true)
+    @Transactional(readOnly = true)
     public EstudianteDTO getById(Long id) {
         return this.estudianteRepository.findById(id).map(EstudianteDTO::new).orElseThrow( () -> new RuntimeException("Estudiante no encontrado"));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public EstudianteDTO findByDni(String dni) {
+        return this.estudianteRepository.findByDni(dni).map(EstudianteDTO::new).orElseThrow( () -> new RuntimeException("Estudiante no encontrado"));
     }
 
     @Override

@@ -7,9 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/inscripciones")
+@RequestMapping("/api/inscripciones")
 public class InscripcionController {
 
         @Autowired
@@ -20,10 +21,10 @@ public class InscripcionController {
             return this.inscripcionService.getAll();
         }
 
-//        @PostMapping("/matricular")
-//        public ResponseEntity<InscripcionDTO> matricularEstudiante(@RequestBody InscripcionDTO inscripcionDTO) {
-//            InscripcionDTO newInscripcion = inscripcionService.save(inscripcionDTO);
-//            return ResponseEntity.accepted().body(newInscripcion);
-//        }
+        @PostMapping("/matricular")
+        public ResponseEntity<InscripcionDTO> matricularEstudiante(@RequestBody InscripcionDTO inscripcionDTO) {
+            InscripcionDTO newInscripcion = inscripcionService.save(inscripcionDTO);
+            return ResponseEntity.accepted().body(newInscripcion);
+        }
 
 }

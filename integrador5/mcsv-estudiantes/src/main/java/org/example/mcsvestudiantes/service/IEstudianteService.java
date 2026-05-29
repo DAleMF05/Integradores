@@ -18,4 +18,6 @@ public interface IEstudianteService {
 
     List<EstudianteDTO> getByCarreraAndCiudad(String carrera, String ciudad);
 
+    EstudianteDTO findByDni(String dni);
+
 }

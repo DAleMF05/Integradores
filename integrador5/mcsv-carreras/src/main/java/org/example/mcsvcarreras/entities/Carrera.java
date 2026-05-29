@@ -15,6 +15,7 @@ public class Carrera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCarrera;
+    @Column(unique = true, nullable = false)
     private String nombre;
     private int duracion;
 

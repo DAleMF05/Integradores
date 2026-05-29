@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/estudiantes")
+@RequestMapping("/api/estudiantes")
 public class EstudianteController {
 
     @Autowired
@@ -30,6 +30,11 @@ public class EstudianteController {
     @GetMapping("/{id}")
     public EstudianteDTO getById( @PathVariable Long id ) {
         return this.estudianteService.getById(id);
+    }
+
+    @GetMapping("/dni/{dni}")
+    public EstudianteDTO findByDni( @PathVariable String dni) {
+        return this.estudianteService.findByDni(dni);
     }
 
     @GetMapping("/lu/{lu}")

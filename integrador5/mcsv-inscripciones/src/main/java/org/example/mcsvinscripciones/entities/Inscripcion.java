@@ -21,6 +21,7 @@ public class Inscripcion {
     private Integer fechaGrad;
     private int antiguedad;
 
+
     @Transient
     private EstudianteM estudiante;
 

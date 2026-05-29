@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "mcsv-carrera", url = "http://localhost:8002")
 public interface CarreraClientRest {
 
-    @GetMapping("/api/carrera/{id}")
-    CarreraM getNombre (@PathVariable Long id);
+    @GetMapping("/api/carrera/nombre/{nombre}")
+    CarreraM getNombre (@PathVariable String nombre);
 
 }
