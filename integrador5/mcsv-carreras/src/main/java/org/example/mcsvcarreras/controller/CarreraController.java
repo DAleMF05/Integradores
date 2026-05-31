@@ -30,7 +30,7 @@ public class CarreraController {
     }
 
     @GetMapping("/{id}")
-    public CarreraDTO getById(@PathVariable Long id){
+    public CarreraDTO getById(@PathVariable String id){
         return this.carreraService.getById(id);
     }
 
@@ -39,14 +39,5 @@ public class CarreraController {
         return this.carreraService.findByNombre(nombre);
     }
 
-    @GetMapping("/inscriptos")
-    public List<CarreraInsDTO> buscarIncriptos(){
-        return this.carreraService.buscarInscriptos();
-    }
-
-    @GetMapping("/reporte")
-    public List<ReporteCarreraDTO> generarReporte() {
-        return this.carreraService.generarReporte();
-    }
 
 }

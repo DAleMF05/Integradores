@@ -17,7 +17,7 @@ public interface IEstudianteRepository  extends JpaRepository<Estudiante, Long> 
     Optional<Estudiante> findByNumLibretaUni(String numLibretaUni);
 
     @Query("""
-        SELECT new com.example.integrador3.dto.EstudianteDTO(
+        SELECT new org.example.mcsvestudiantes.dto.EstudianteDTO(
             e.dni,
             e.nombre,
             e.apellido,
@@ -25,14 +25,14 @@ public interface IEstudianteRepository  extends JpaRepository<Estudiante, Long> 
             e.genero,
             e.ciudad,
             e.numLibretaUni)
-            FROM Estudiante e
-            ORDER BY e.dni
+        FROM Estudiante e
+        ORDER BY e.dni
     """)
     List<EstudianteDTO> getAll();
 
     @Query("""
-        SELECT new com.example.integrador3.dto.EstudianteDTO(
-                        e.dni,
+        SELECT new org.example.mcsvestudiantes.dto.EstudianteDTO(
+            e.dni,
             e.nombre,
             e.apellido,
             e.edad,
@@ -44,19 +44,19 @@ public interface IEstudianteRepository  extends JpaRepository<Estudiante, Long> 
     """)
     List<EstudianteDTO> getByGenero(char gen);
 
-    @Query("""
-        SELECT new com.example.integrador3.dto.EstudianteDTO(
-            e.dni, e.nombre,
-            e.apellido,
-            e.edad,
-            e.genero,
-            e.ciudad,
-            e.numLibretaUni)
-        FROM Estudiante e
-        JOIN e.inscripciones i
-        JOIN i.carrera c
-        WHERE c.nombre = :carrera AND e.ciudad = :ciudad
-        """)
-    List<EstudianteDTO> getEstudiantesByCarreraAndCiudad(String carrera, String ciudad);
+//    @Query("""
+//        SELECT new org.example.mcsvestudiantes.dto.EstudianteDTO(
+//            e.dni, e.nombre,
+//            e.apellido,
+//            e.edad,
+//            e.genero,
+//            e.ciudad,
+//            e.numLibretaUni)
+//        FROM Estudiante e
+//        JOIN e.inscripciones i
+//        JOIN i.carrera c
+//        WHERE c.nombre = :carrera AND e.ciudad = :ciudad
+//        """)
+//    List<EstudianteDTO> getEstudiantesByCarreraAndCiudad(String carrera, String ciudad);
 
 }

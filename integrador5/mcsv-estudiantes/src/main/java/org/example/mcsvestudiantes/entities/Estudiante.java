@@ -50,7 +50,7 @@ public class Estudiante {
         this.genero = estDTO.getGenero();
         this.ciudad = estDTO.getCiudad();
         this.numLibretaUni = estDTO.getNumLibretaUni();
-        this.inscripciones = new ArrayList<>();
+//        this.inscripciones = new ArrayList<>();
     }
 
     // getters y setters

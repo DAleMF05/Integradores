@@ -47,9 +47,9 @@ public class EstudianteController {
         return this.estudianteService.getByGenero(gen);
     }
 
-    @GetMapping("/carrera/{carrera}")
-    public List<EstudianteDTO> getByCarreraYciudad(  @PathVariable String carrera, @RequestParam String ciudad) {
-        return this.estudianteService.getByCarreraAndCiudad(carrera, ciudad);
-    }
+//    @GetMapping("/carrera/{carrera}")
+//    public List<EstudianteDTO> getByCarreraYciudad(  @PathVariable String carrera, @RequestParam String ciudad) {
+//        return this.estudianteService.getByCarreraAndCiudad(carrera, ciudad);
+//    }
 
 }

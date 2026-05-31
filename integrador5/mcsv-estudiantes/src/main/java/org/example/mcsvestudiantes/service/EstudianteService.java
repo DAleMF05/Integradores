@@ -52,11 +52,11 @@ public class EstudianteService implements IEstudianteService {
         return this.estudianteRepository.getByGenero(gen);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<EstudianteDTO> getByCarreraAndCiudad(String carrera, String ciudad) {
-        return this.estudianteRepository.getEstudiantesByCarreraAndCiudad(carrera, ciudad);
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public List<EstudianteDTO> getByCarreraAndCiudad(String carrera, String ciudad) {
+//        return this.estudianteRepository.getEstudiantesByCarreraAndCiudad(carrera, ciudad);
+//    }
 
 
 }
