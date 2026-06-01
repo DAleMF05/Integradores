@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "mcsv-estudiantes", url = "http://localhost:8001")
 public interface EstudianteClientRest {
 
-    @GetMapping("/api/estudiantes/dni/{dni}")
-    EstudianteM findByDni (@PathVariable String dni);
+    @GetMapping("/api/estudiantes/{id}")
+    EstudianteM getById (@PathVariable String id);
 }

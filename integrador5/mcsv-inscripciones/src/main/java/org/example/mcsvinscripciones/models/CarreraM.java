@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarreraM {
+
     private String idCarrera;
     private String nombre;
     private int duracion;

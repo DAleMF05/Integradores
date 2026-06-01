@@ -28,8 +28,6 @@ public class Estudiante {
     @Column(unique = true, nullable = false)
     private String numLibretaUni;
 
-//    @OneToMany(mappedBy = "estudiante")
-//    private List<Inscripcion> inscripciones;
 
     public Estudiante(String dni, String nombre, String apellido, int edad, char genero, String ciudad, String numLibretaUni) {
         this.dni = dni;
@@ -39,9 +37,10 @@ public class Estudiante {
         this.genero = genero;
         this.ciudad = ciudad;
         this.numLibretaUni = numLibretaUni;
-//        this.inscripciones = new ArrayList<>();
     }
 
+    //------------Issue----------
+    //Mala practica, deberia mapearse desde el service, este constructor no deberia existir
     public Estudiante (EstudianteDTO estDTO) {
         this.dni = estDTO.getDni();
         this.nombre = estDTO.getNombre();
@@ -50,8 +49,6 @@ public class Estudiante {
         this.genero = estDTO.getGenero();
         this.ciudad = estDTO.getCiudad();
         this.numLibretaUni = estDTO.getNumLibretaUni();
-//        this.inscripciones = new ArrayList<>();
     }
 
-    // getters y setters
 }

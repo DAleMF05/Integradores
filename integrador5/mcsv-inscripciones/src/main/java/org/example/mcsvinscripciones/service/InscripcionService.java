@@ -35,18 +35,23 @@ public class InscripcionService implements IInscripcionService {
     @Transactional
     public InscripcionDTO save(InscripcionDTO inscripcionDTO) {
 
-        EstudianteM estudiante = estudianteC.findByDni(inscripcionDTO.getDniEstudiante());
-        CarreraM carrera = carreraC.getNombre(inscripcionDTO.getNombreCarrera());
+
 
         Inscripcion inscripcion = new Inscripcion(
                 inscripcionDTO.getFechaInsc(),
                 inscripcionDTO.getFechaGrad(),
                 inscripcionDTO.getAntiguedad(),
-                estudiante,
-                carrera
+                inscripcionDTO.getIdCarrera(),
+                inscripcionDTO.getIdEstudiante()
+
         );
+        EstudianteM estudiante = estudianteC.getById(inscripcionDTO.getIdEstudiante());
+        CarreraM carrera = carreraC.getById(inscripcionDTO.getIdCarrera());
 
         Inscripcion savedInscripcion = inscripcionRepository.save(inscripcion);
+        savedInscripcion.setEstudiante(estudiante);
+        savedInscripcion.setCarrera(carrera);
+
         return new InscripcionDTO(savedInscripcion);
     }
 }

@@ -17,22 +17,22 @@ public class Inscripcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idInscripcion;
+    private String idEstudiante;
+    private Long idCarrera;
     private Integer fechaInsc;
     private Integer fechaGrad;
     private int antiguedad;
 
-
     @Transient
     private EstudianteM estudiante;
-
     @Transient
     private CarreraM carrera;
 
-    public Inscripcion(int fechaInsc, int fechaGrad, int antiguedad, EstudianteM estudiante, CarreraM carrera) {
+    public Inscripcion(Integer fechaInsc, Integer fechaGrad, int antiguedad, Long idCarrera, String idEstudiante) {
         this.fechaInsc = fechaInsc;
         this.fechaGrad = fechaGrad;
         this.antiguedad = antiguedad;
-        this.estudiante = estudiante;
-        this.carrera = carrera;
+        this.idCarrera = idCarrera;
+        this.idEstudiante = idEstudiante;
     }
 }
