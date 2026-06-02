@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class EstudianteM {
 
-    private Long idEstudiante;
+//    private Long idEstudiante;
 
     private String dni;
     private String nombre;
@@ -22,5 +22,4 @@ public class EstudianteM {
     private String ciudad;
     private String numLibretaUni;
 
-//    private List<Inscripcion> inscripciones;
 }

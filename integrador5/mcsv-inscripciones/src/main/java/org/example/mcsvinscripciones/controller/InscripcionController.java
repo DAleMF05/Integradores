@@ -1,6 +1,7 @@
 package org.example.mcsvinscripciones.controller;
 
 import org.example.mcsvinscripciones.dto.InscripcionDTO;
+import org.example.mcsvinscripciones.models.EstudianteM;
 import org.example.mcsvinscripciones.service.InscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,4 +28,11 @@ public class InscripcionController {
             return ResponseEntity.accepted().body(newInscripcion);
         }
 
+        @GetMapping("/estudiantesPorCarrera/{nombreCarrera}/{ciudad}")
+        public ResponseEntity<List<EstudianteM>> getEstudiantesPorCarreraYCiudad(@PathVariable String nombreCarrera, @PathVariable String ciudad) {
+
+            List<EstudianteM> estudiantes = inscripcionService.getByCarreraYCiudad(nombreCarrera, ciudad);
+
+            return ResponseEntity.ok(estudiantes);
+        }
 }

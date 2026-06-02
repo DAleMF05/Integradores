@@ -12,11 +12,13 @@ import org.example.mcsvcarreras.entities.Carrera;
 
 public class CarreraDTO {
 
+    private String idCarrera;
     private String nombre;
     private int duracion;
 
 
     public CarreraDTO(Carrera carrera) {
+        this.idCarrera = carrera.getIdCarrera();
         this.nombre = carrera.getNombre();
         this.duracion = carrera.getDuracion();
     }

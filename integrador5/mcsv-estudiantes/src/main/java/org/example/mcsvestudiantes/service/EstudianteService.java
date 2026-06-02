@@ -53,10 +53,10 @@ public class EstudianteService implements IEstudianteService {
     }
 
 //    @Override
-//    @Transactional(readOnly = true)
-//    public List<EstudianteDTO> getByCarreraAndCiudad(String carrera, String ciudad) {
-//        return this.estudianteRepository.getEstudiantesByCarreraAndCiudad(carrera, ciudad);
-//    }
+    @Transactional(readOnly = true)
+    public List<EstudianteDTO> getByDniAndCiudad(String dni, String ciudad) {
+        return this.estudianteRepository.getEstudianteByDniAndCiudad(dni, ciudad);
+    }
 
 
 }

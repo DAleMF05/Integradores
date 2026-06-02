@@ -30,9 +30,9 @@ public class CargaDeInscripciones {
                 while ((linea = reader.readNext()) != null) {
                     Inscripcion inscripcion = new Inscripcion();
 
-                    // Asignamos directamente los IDs lógicos que vienen en el CSV
-                    inscripcion.setIdEstudiante(linea[1]); // idEstudiante
-                    inscripcion.setIdCarrera(Long.parseLong(linea[2])); // idCarrera
+                    // Se asignan los IDs que vienen en el CSV
+                    inscripcion.setDniEstudiante(linea[1]);
+                    inscripcion.setIdCarrera(linea[2]);
 
                     inscripcion.setFechaInsc(Integer.parseInt(linea[3]));
                     inscripcion.setFechaGrad(Integer.parseInt(linea[4]));

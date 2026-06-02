@@ -13,4 +13,5 @@ import java.util.List;
 public interface IInscripcionRepository extends JpaRepository<Inscripcion, Long> {
 
 
+    List<Inscripcion> findByIdCarrera(String idCarrera);
 }

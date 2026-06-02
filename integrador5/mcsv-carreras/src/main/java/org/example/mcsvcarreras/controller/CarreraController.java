@@ -21,7 +21,6 @@ public class CarreraController {
     public ResponseEntity<CarreraDTO> saveCarrera(@RequestBody CarreraDTO carrera) {
         final var result = this.carreraService.save(carrera);
         return ResponseEntity.accepted().body(result);
-
     }
 
     @GetMapping("")

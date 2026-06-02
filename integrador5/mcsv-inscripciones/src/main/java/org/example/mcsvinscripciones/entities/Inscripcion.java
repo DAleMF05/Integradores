@@ -17,8 +17,8 @@ public class Inscripcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idInscripcion;
-    private String idEstudiante;
-    private Long idCarrera;
+    private String dniEstudiante;
+    private String idCarrera;
     private Integer fechaInsc;
     private Integer fechaGrad;
     private int antiguedad;
@@ -28,11 +28,11 @@ public class Inscripcion {
     @Transient
     private CarreraM carrera;
 
-    public Inscripcion(Integer fechaInsc, Integer fechaGrad, int antiguedad, Long idCarrera, String idEstudiante) {
+    public Inscripcion(Integer fechaInsc, Integer fechaGrad, int antiguedad, String idCarrera, String dniEstudiante) {
         this.fechaInsc = fechaInsc;
         this.fechaGrad = fechaGrad;
         this.antiguedad = antiguedad;
         this.idCarrera = idCarrera;
-        this.idEstudiante = idEstudiante;
+        this.dniEstudiante = dniEstudiante;
     }
 }

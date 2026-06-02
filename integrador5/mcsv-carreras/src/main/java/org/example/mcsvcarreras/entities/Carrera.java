@@ -24,6 +24,7 @@ public class Carrera {
     }
 
     public Carrera(CarreraDTO carre) {
+        this.idCarrera = carre.getIdCarrera();
         this.nombre = carre.getNombre();
         this.duracion = carre.getDuracion();
     }
